@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="libro_salarios">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <t t-foreach="docs" t-as="o">
+                <t t-set="empleado" t-value="_get_empleado(o)"/>
+                <div class="article">
+                    <div class="header">
+                        <div class="encabezado" align="center">
+                                <p style="tex-align:center">
+                                    <span t-field="empleado.company_id.name"/>
+                                </p>
+                                <p style="tex-align:center">
+                                    <span t-field="empleado.company_id.vat"/>
+                                </p>
+                                <p style="tex-align:center">
+                                    LIBRO DE SALARIOS PARA TRABAJADORES PERMANENTES
+                                </p>
+                                <p style="tex-align:center">
+                                    AUTORIZADO POR EL MINISTERIO DE TRABAJO Y PREVISION SOCIAL, SEGÚN ARTÍCULO 102 DEL CODIGO DE TRABAJO
+                                </p>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div style="height:4cm"/>
+                        <table style="margin: 0px auto;">
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="empleado.name"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="empleado.edad"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <t t-if="empleado.gender == 'male'">
+                                        Hombre
+                                    </t>
+                                    <t t-else="">
+                                        Mujer
+                                    </t>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="empleado.country_id.name"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                  <span t-field="empleado.job_id.name"/>
+                                </td>
+                            </tr>
+                            <t t-set="fecha" t-value="_get_contrato(o)"/>
+                            <tr>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Nombre del trabajador
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Edad
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Sexo
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Nacionalidad
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Ocupación
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">
+                                    <span t-field="empleado.igss"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-field="empleado.identification_id"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-esc="fecha['fecha_ingreso']" t-options="{'widget': 'date'}"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td style="text-align:center">
+                                    <span t-esc="fecha['fecha_finalizacion']" t-options="{'widget': 'date'}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                     No. de afiliación al IGSS.
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    No. DPI ó permiso de Trabajo.
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Fecha de Ingreso
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;border-top: 1px solid black;width:100px">
+                                    Fecha finalizac. de relación laboral
+                                </td>
+                                <td style="width:100px">
+                                </td>
+                                <td style="text-align:center;width:100px">
+                                    <b style="font-size:18px">Folio No.</b>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td style="width:100px">Codigo y Nombre del Trabajador</td>
+                                <td style="width:100px"><span t-field="empleado.name"/></td>
+                                <td style="width:100px">Puesto:</td>
+                                <td style="width:100px"><span t-field="empleado.job_id.name"/></td>
+                                <t t-set="fecha" t-value="_get_contrato(o)"/>
+                                <td style="width:100px">Fecha de ingreso</td>
+                                <td style="width:100px"><span t-esc="fecha['fecha_ingreso']" t-options="{'widget': 'date'}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Numero de Afiliacion IGSS</td>
+                                <td><span t-field="empleado.igss"/></td>
+                                <td>Sexo</td>
+                                <td>
+                                    <t t-if="empleado.gender == 'male'">
+                                        Hombre
+                                    </t>
+                                    <t t-else="">
+                                        Mujer
+                                    </t>
+                                </td>
+                                <td>Edad</td>
+                                <td><span t-field="empleado.edad"/> años</td>
+                                <td>Fecha finalizacion laboral <span t-esc="fecha['fecha_finalizacion']" t-options="{'widget': 'date'}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Documento Unico de Identificacion:</td>
+                                <td><span t-field="empleado.identification_id"/></td>
+                                <td>Nacionalidad:</td>
+                                <td><span t-field="empleado.country_id.name"/></td>
+                                <td colspan="4"></td>
+                            </tr> -->
+                        </table>
+                        <br/>
+                        <t t-set="nominas" t-value="_get_nominas(o,anio)"/>
+                        <t t-set="ordinario_total" t-value="0"/>
+                        <t t-set="extra_ordinario_total" t-value="0"/>
+                        <t t-set="otros_salarios_total" t-value="0"/>
+                        <t t-set="septimo_asueto_total" t-value="0"/>
+                        <t t-set="vacaciones_total" t-value="0"/>
+                        <t t-set="boni_incentivo_total" t-value="0"/>
+                        <t t-set="salario_total" t-value="0"/>
+                        <t t-set="igss_total" t-value="0"/>
+                        <t t-set="otras_deducciones_total" t-value="0"/>
+                        <t t-set="isr_total" t-value="0"/>
+                        <t t-set="total_deducciones" t-value="0"/>
+                        <t t-set="bono_agui_indem_total" t-value="0"/>
+                        <t t-set="boni_incentivo_decreto_total" t-value="0"/>
+                        <t t-set="dev_isr_otro_total" t-value="0"/>
+                        <t t-set="decreto_total" t-value="0"/>
+                        <t t-set="moneda" t-value="user.company_id.currency_id"/>
+                        <t t-set="incentivo_decreto_total" t-value="0"/>
+                        <t t-set="liquido_total" t-value="0"/>
+                        <t t-set="fecha" t-value="_get_contrato(o)"/>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th colspan="4"/>
+                                    <th colspan="2" style="text-align:center">HORAS TRABAJADAS</th>
+                                    <th colspan="4" style="text-align:center">SALARIO DEVENGADO</th>
+                                    <th colspan="1"/>
+                                    <th colspan="3" style="text-align:center">DEDUCCIONES LEGALES</th>
+                                    <th colspan="1"/>
+                                    <th colspan="3" style="text-align:center"/>
+                                </tr>
+                                <tr>
+                                    <th>No. de orden</th>
+                                    <th>Periodo de trabajo</th>
+                                    <th>Salario en Quetzales</th>
+                                    <th>Dias Trabajados</th>
+                                    <th>Ordinarias</th>
+                                    <th>Extraordinarias</th>
+                                    <th>Ordinario</th>
+                                    <th>Extraordinario</th>
+                                    <th>Otros salarios</th>
+                                    <th>Septimos y asuetos</th>
+                                    <th>Vacaciones</th>
+                                    <th>SALARIO TOTAL</th>
+                                    <th>Cuota laboral IGSS</th>
+                                    <th>Descuentos ISR</th>
+                                    <th>Otras deducciones</th>
+                                    <th>Total</th>
+                                    <th>Bonificación anual 42-92,Aguinaldo Decreto 76-78</th>
+                                    <th>Bonificación Incentivo Decreto 37-2001</th>
+                                    <!-- <th>Decreto</th> -->
+                                    <th>Devoluciones I.S.R. y otras</th>
+
+                                    <!-- <th>Fija</th>
+                                    <th>Variable</th> -->
+                                    <th>Liquido a Recibir</th>
+                                    <th>Firma</th>
+                                    <th>Observaciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="nominas" t-as="nomina">
+                                        <td><span t-esc="nomina['orden']"/></td>
+                                        <td><span t-esc="nomina['fecha_inicio']" t-options="{'widget': 'date'}"/>-<span t-esc="nomina['fecha_fin']" t-options="{'widget': 'date'}"/></td>
+                                        <td><span t-esc="nomina['salario']"  t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['dias_trabajados']"/></td>
+                                        <td><span t-esc="nomina['ordinarias']"/></td>
+                                        <td><span t-esc="nomina['extra_ordinarias']"/></td>
+                                        <td><span t-esc="nomina['ordinario']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['extra_ordinario']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['otros_salarios']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['septimos_asuetos']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['vacaciones']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['total_salario_devengado']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['igss']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['isr']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['otras_deducciones']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['total_deducciones']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['bono_agui_indem']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['boni_incentivo_decreto']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <!-- <td><span t-esc="nomina['decreto']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td> -->
+                                        <td><span t-esc="nomina['dev_isr_otro']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+
+                                        <!-- <td><span t-esc="nomina['fija']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td><span t-esc="nomina['variable']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td> -->
+                                        <td><span t-esc="nomina['liquido_recibir']" t-options="{'widget': 'monetary', 'display_currency': nomina['moneda_id']}"/></td>
+                                        <td></td>
+                                        <td></td>
+                                        <t t-set="ordinario_total" t-value="ordinario_total+nomina['ordinario']"/>
+                                        <t t-set="extra_ordinario_total" t-value="extra_ordinario_total+nomina['extra_ordinario']"/>
+                                        <t t-set="otros_salarios_total" t-value="otros_salarios_total+nomina['otros_salarios']"/>
+                                        <t t-set="septimo_asueto_total" t-value="septimo_asueto_total+nomina['septimos_asuetos']"/>
+                                        <t t-set="vacaciones_total" t-value="vacaciones_total+nomina['vacaciones']"/>
+                                        <t t-set="salario_total" t-value="salario_total+nomina['total_salario_devengado']"/>
+                                        <t t-set="igss_total" t-value="igss_total+nomina['igss']"/>
+                                        <t t-set="isr_total" t-value="isr_total+nomina['isr']"/>
+                                        <t t-set="otras_deducciones_total" t-value="otras_deducciones_total+nomina['otras_deducciones']"/>
+                                        <t t-set="total_deducciones" t-value="total_deducciones+nomina['total_deducciones']"/>
+                                        <t t-set="bono_agui_indem_total" t-value="bono_agui_indem_total+nomina['bono_agui_indem']"/>
+                                        <t t-set="boni_incentivo_decreto_total" t-value="boni_incentivo_decreto_total+nomina['boni_incentivo_decreto']"/>
+                                        <t t-set="dev_isr_otro_total" t-value="dev_isr_otro_total+nomina['dev_isr_otro']"/>
+                                        <t t-set="liquido_total" t-value="liquido_total+nomina['liquido_recibir']"/>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"></td>
+                                    <td><span t-esc="ordinario_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="extra_ordinario_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="otros_salarios_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="septimo_asueto_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="vacaciones_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="salario_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="igss_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="isr_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="otras_deducciones_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="total_deducciones" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="bono_agui_indem_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="boni_incentivo_decreto_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="dev_isr_otro_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td><span t-esc="liquido_total" t-options="{'widget': 'monetary', 'display_currency': moneda}"/></td>
+                                    <td colspan="6"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="salario_promedio_entrada" model="hr.payslip.input.type">
+        <field name="name">Salario promedio</field>
+        <field name="code">SalarioPromedio</field>
+    </record>
+
+    <record id="dias_trabajados_entrada" model="hr.payslip.input.type">
+        <field name="name">Dias Trabajados 12 Meses</field>
+        <field name="code">DiasTrabajados12Meses</field>
+    </record>
+
+</odoo>

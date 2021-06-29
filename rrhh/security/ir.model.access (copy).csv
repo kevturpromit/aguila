@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rrhh_planilla_manager,rrhh.planilla.manager,model_rrhh_planilla,hr.group_hr_manager,1,1,1,1
+access_rrhh_recibo_manager,rrhh.recibo.manager,model_rrhh_recibo,hr.group_hr_manager,1,1,1,1
+access_rrhh_planilla_usuario,rrhh.planilla.usuario,model_rrhh_planilla,base.group_user,1,0,0,0
+access_rrhh_recibo_usuario,rrhh.recibo.usuario,model_rrhh_recibo,base.group_user,1,0,0,0
+access_rrhh_planilla_columna_manager,rrhh.planilla.columna.manager,model_rrhh_planilla_columna,hr.group_hr_manager,1,1,1,1
+access_rrhh_planilla_columna_usuario,rrhh.planilla.columna.usuario,model_rrhh_planilla_columna,base.group_user,1,0,0,0
+access_rrhh_recibo_linea_manager,rrhh.recibo.linea.manager,model_rrhh_recibo_linea,hr.group_hr_manager,1,1,1,1
+access_rrhh_recibo_linea_usuario,rrhh.recibo.linea.usuario,model_rrhh_recibo_linea,base.group_user,1,0,0,0
+access_rrhh_entrada_linea_manager,rrhh.entrada.linea.manager,model_rrhh_entrada_linea,hr.group_hr_manager,1,1,1,1
+access_rrhh_entrada_linea_usuario,rrhh.entrada.linea.usuario,model_rrhh_entrada_linea,base.group_user,1,0,0,0
+access_rrhh_prestamo_usuario,rrhh.prestamo.usuario,model_rrhh_prestamo,base.group_user,1,0,0,0
+access_rrhh_prestamo_manager,rrhh.prestamo.manager,model_rrhh_prestamo,hr.group_hr_manager,1,1,1,1
+access_rrhh_prestamo_linea_usuario,rrhh.prestamo.linea.usuario,model_rrhh_prestamo_linea,base.group_user,1,0,0,0
+access_rrhh_prestamo_linea_manager,rrhh.prestamo.linea.manager,model_rrhh_prestamo_linea,hr.group_hr_manager,1,1,1,1
+access_rrhh_res_company_centro_trabajo_usuario,rrhh.res.company.centro.trabajo.usuario,rrhh.model_res_company_centro_trabajo,base.group_user,1,0,0,0
+access_rrhh_res_company_centro_trabajo_ manager,rrhh.res.company.centro.trabajo.manager,rrhh.model_res_company_centro_trabajo,hr.group_hr_manager,1,1,1,1
