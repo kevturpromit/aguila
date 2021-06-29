@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_igss_wizard_form" model="ir.ui.view">
+            <field name="name">igss_wizard.form</field>
+            <field name="model">rrhh.igss.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Planillas">
+                    <group>
+                        <separator colspan="4" string="Tipo de planilla"/>
+                        <group>
+                            <field name="identificacion_tipo_planilla"/>
+                            <field name="nombre_tipo_planilla"/>
+                            <field name="tipo_afiliados"/>
+                            <field name="periodo_planilla"/>
+                        </group>
+                        <group>
+                            <field name="departamento_republica"/>
+                            <field name="actividad_economica"/>
+                            <field name="clase_planilla"/>
+                        </group>
+                    </group>
+                    <group>
+                        <separator colspan="4" string="Liquidaciones"/>
+                        <group>
+                            <field name="numero_liquidacion"/>
+                            <field name="tipo_planilla_liquidacion"/>
+                            <field name="fecha_inicial"/>
+                        </group>
+                        <group>
+                            <field name="fecha_final"/>
+                            <field name="tipo_liquidacion"/>
+                            <field name="numero_nota_cargo"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="archivo" filename="name" readonly="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="generar" string="Generar" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_igss_wizard"
+            name="Igss"
+            target="new"
+            binding_model="hr.payslip.run"
+            res_model="rrhh.igss.wizard"
+            view_mode="form"/>
+</odoo>

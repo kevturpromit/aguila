@@ -1,0 +1,122 @@
+<odoo>
+  <data>
+
+        <record id="rrhh.view_company_form" model="ir.ui.view">
+            <field name="name">rrhh.res.company.form</field>
+            <field name="model">res.company</field>
+	        <field name="inherit_id" ref="base.view_company_form"/>
+	        <field name="arch" type="xml">
+                <data>
+                    <notebook position="inside">
+                        <page string="RRHH">
+                            <group string="Patrono">
+                                <group>
+                                    <field name="version_mensaje"/>
+                                    <field name="numero_patronal"/>
+                                    <field name="marca"/>
+                                </group>
+                                <group>
+                                    <field name="tipo_planilla"/>
+                                    <field name="anio_inicio_operaciones"/>
+                                    <field name="tamanio_empresa_ventas"/>
+                                    <field name="tamanio_empresa_trabajadores"/>
+                                    <field name="actividad_gran_grupo"/>
+                                    <field name="sub_actividad_economica"/>
+                                    <field name="ocupacion_grupo"/>
+                                </group>
+                            </group>
+                            <group string="Contrato">
+                                <group>
+                                    <field name="representante_legal_id"/>
+                                </group>
+                            </group>
+                            <group string="Centros">
+                                <group>
+                                    <field name="codigo_centro_trabajo"/>
+                                    <field name="nombre_centro_trabajo"/>
+                                    <field name="direccion_centro_trabajo"/>
+                                    <field name="zona_centro_trabajo"/>
+                                    <field name="telefonos"/>
+                                    <field name="fax"/>
+                                </group>
+                                <group>
+                                    <field name="nombre_contacto"/>
+                                    <field name="correo_electronico"/>
+                                    <field name="codigo_departamento"/>
+                                    <field name="codigo_municipio"/>
+                                    <field name="codigo_actividad_economica"/>
+                                </group>
+                            </group>
+                            <group string="Tipos de planilla">
+                                <group>
+                                    <field name="identificacion_tipo_planilla"/>
+                                    <field name="nombre_tipo_planilla"/>
+                                    <field name="tipo_afiliados"/>
+                                    <field name="periodo_planilla"/>
+                                </group>
+                                <group>
+                                    <field name="departamento_republica"/>
+                                    <field name="actividad_economica"/>
+                                    <field name="clase_planilla"/>
+                                </group>
+                            </group>
+                            <group string="Libro de salarios">
+                                <group>
+                                    <field name="salario_promedio_ids" widget="many2many_tags"/>
+                                    <field name="salario_ids" widget="many2many_tags"/>
+                                    <field name="ordinarias_ids" widget="many2many_tags"/>
+                                    <field name="extras_ordinarias_ids" widget="many2many_tags"/>
+                                    <field name="ordinario_ids" widget="many2many_tags"/>
+                                    <field name="extra_ordinario_ids" widget="many2many_tags"/>
+                                    <field name="horas_extras_ids" widget="many2many_tags"/>
+                                    <field name="retribucion_comisiones_ids" widget="many2many_tags"/>
+                                    <field name="viaticos_ids" widget="many2many_tags"/>
+                                    <field name="extras_ids" widget="many2many_tags"/>
+                                    <field name="descuentos_ids" widget="many2many_tags"/>
+                                    <field name="septimos_asuetos_ids" widget="many2many_tags"/>
+                                    <field name="vacaciones_ids" widget="many2many_tags"/>
+                                    <field name="numero_horas_extras_ids" widget="many2many_tags"/>
+                                </group>
+                                <group>
+                                    <field name="igss_ids" widget="many2many_tags"/>
+                                    <field name="isr_ids" widget="many2many_tags"/>
+                                    <field name="anticipos_ids" widget="many2many_tags"/>
+                                    <field name="bonificacion_ids" widget="many2many_tags"/>
+                                    <field name="bono_ids" widget="many2many_tags"/>
+                                    <field name="aguinaldo_ids" widget="many2many_tags"/>
+                                    <field name="indemnizacion_ids" widget="many2many_tags"/>
+                                    <field name="retribucion_vacaciones_ids" widget="many2many_tags"/>
+                                    <field name="bonificaciones_adicionales_ids" widget="many2many_tags"/>
+                                    <field name="decreto_ids" widget="many2many_tags"/>
+                                    <field name="fija_ids" widget="many2many_tags"/>
+                                    <field name="variable_ids" widget="many2many_tags"/>
+                                    <field name="otro_salario_ids" widget="many2many_tags"/>
+                                    <field name="boni_incentivo_decreto_ids" widget="many2many_tags"/>
+                                    <field name="devolucion_isr_otro_ids" widget="many2many_tags"/>
+
+                                </group>
+                            </group>
+                            <label for="centro" string="Centros de trabajo"/>
+                            <field name="centro_trabajo_ids">
+                                <tree string="Centros" editable="bottom">
+                                    <field name="codigo"/>
+                                    <field name="nombre"/>
+                                    <field name="direccion"/>
+                                    <field name="zona"/>
+                                    <field name="telefono"/>
+                                    <field name="fax"/>
+                                    <field name="nombre_contacto"/>
+                                    <field name="correo_electronico"/>
+                                    <field name="codigo_departamento"/>
+                                    <field name="codigo_municipio"/>
+                                    <field name="codigo_actividad_economica"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </data>
+	        </field>
+	    </record>
+
+  </data>
+</odoo>

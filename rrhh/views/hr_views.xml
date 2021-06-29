@@ -1,0 +1,213 @@
+<odoo>
+  <data>
+
+        <record id="act_rrhh_prestamo" model="ir.actions.act_window">
+            <field name="name">Prestamo</field>
+            <field name="res_model">rrhh.prestamo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                'search_default_employee_id': [active_id],
+                'default_employee_id': active_id,
+                'search_default_group_by_state': 1
+            }</field>
+        </record>
+
+        <record id="act_rrhh_prestamo_2" model="ir.actions.act_window">
+            <field name="name">Prestamo</field>
+            <field name="res_model">rrhh.prestamo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+        </record>
+
+        <record id="rrhh.view_employee_form" model="ir.ui.view">
+            <field name="name">rrhh.hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <div name="button_box" position="inside">
+                        <button name="%(act_rrhh_prestamo_2)d"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            type="action"
+                            groups="hr.group_hr_manager">
+                            <field name="cantidad_prestamos" widget="statinfo" string="Prestamos"/>
+                        </button>
+                    </div>
+                    <page name="hr_settings" position="after">
+                        <page name="campos_especificos" string="Campos Especificos">
+                            <group>
+                                <group string="IGSS">
+                                    <field name="numero_liquidacion"/>
+                                    <field name="codigo_centro_trabajo"/>
+                                    <!-- <field name="centro_trabajo_id"/> -->
+                                    <field name="codigo_ocupacion"/>
+                                    <field name="condicion_laboral"/>
+                                </group>
+                                <group string="Información de Pago">
+                                    <field name="diario_pago_id"/>
+                                    <field name="recibo_id"/>
+                                </group>
+                                <group string="Información Laboral">
+                                    <field name="primer_nombre"/>
+                                    <field name="segundo_nombre"/>
+                                    <field name="primer_apellido"/>
+                                    <field name="segundo_apellido"/>
+                                    <field name="apellido_casada"/>
+                                    <field name="pueblo_pertenencia"/>
+                                    <field name="codigo_empleado"/>
+                                    <field name="igss"/>
+                                    <field name="irtra"/>
+                                    <field name="nit"/>
+                                    <field name="nivel_academico"/>
+                                    <field name="profesion"/>
+                                    <field name="etnia"/>
+                                    <field name="idioma"/>
+                                    <field name="pais_origen"/>
+                                    <field name="trabajado_extranjero"/>
+                                    <field name="motivo_finalizacion"/>
+                                    <field name="jornada_trabajo"/>
+                                    <field name="permiso_trabajo"/>
+                                    <field name="contacto_emergencia"/>
+                                    <field name="vecindad_dpi"/>
+                                    <field name="documento_identificacion"/>
+                                    <field name="forma_trabajo_extranjero"/>
+                                    <field name="pais_trabajo_extranjero_id"/>
+                                    <field name="finalizacion_laboral_extranjero"/>
+                                </group>
+                                <group string="Tarjetas Alimentarias">
+                                    <field name="tarjeta_salud"/>
+                                    <field name="tarjeta_fecha_vencimiento"/>
+                                    <field name="tarjeta_manipulacion"/>
+                                    <field name="tarjeta_pulmones"/>
+                                </group>
+                            </group>
+                        </page>
+                    </page>
+                    <field name="birthday" position="after">
+                        <field name="edad"/>
+                    </field>
+                    <field name="identification_id" position="after">
+                        <label for="departamento_id" string="Extendido en"/>
+                        <div class="o_address_format">
+                            <field name="departamento_id" placeholder="Departmento..." class="o_address_street"/>
+                            <field name="pais_id" placeholder="Pais..." class="o_address_street"/>
+                        </div>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record id="rrhh_view_employee_prestamo_form" model="ir.ui.view">
+            <field name="name">rrhh.employee.prestamo</field>
+            <field name="model">rrhh.prestamo</field>
+            <field name="arch" type="xml">
+                <form string="Prestamo">
+                    <header>
+                        <button string="Procesar" name="prestamos" type="object" class="oe_highlight"  attrs="{'invisible':[('estado','!=','nuevo')]}"/>
+                        <button string="Pasar a Proceso" name="cancelar" type="object" groups="hr.group_hr_manager"  attrs="{'invisible':[('estado','!=','pagado')]}"/>
+                        <field name="estado" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="fecha_inicio" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                            <field name="numero_descuentos" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                            <field name="employee_id" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                            <field name="pendiente_pagar_prestamo" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                        </group>
+                        <group>
+                            <field name="total" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                            <field name="mensualidad" attrs="{'readonly':[('estado','!=','nuevo')]}"/>
+                            <field name="descripcion"/>
+                            <field name="codigo"/>
+                        </group>
+                    </group>
+                    <field name="prestamo_ids">
+                        <tree editable="bottom">
+                            <field name="mes" attrs="{'readonly':[('nomina_id','!=',False)]}"/>
+                            <field name="anio" attrs="{'readonly':[('nomina_id','!=',False)]}"/>
+                            <field name="monto" attrs="{'readonly':[('nomina_id','!=',False)]}"/>
+                            <field name="nomina_id" widget="many2many_tags"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+        <record id="rrhh_prestamo_view_tree" model="ir.ui.view">
+            <field name="name">rrhh.prestamo.tree</field>
+            <field name="model">rrhh.prestamo</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts">
+                    <field name="employee_id"/>
+                    <field name="fecha_inicio"/>
+                    <field name="numero_descuentos"/>
+                    <field name="total"/>
+                    <field name="mensualidad"/>
+                    <field name="descripcion"/>
+                    <field name="codigo"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rrhh_prestamo_view_search" model="ir.ui.view">
+            <field name="name">rrhh.prestamo.search</field>
+            <field name="model">rrhh.prestamo</field>
+            <field name="arch" type="xml">
+                <search string="Search Contract">
+                    <field name="employee_id" string="Contracts"/>
+                    <field name="fecha_inicio"/>
+                    <field name="numero_descuentos"/>
+                    <field name="total"/>
+                    <field name="mensualidad"/>
+                    <field name="descripcion"/>
+                    <field name="codigo"/>
+                    <separator />
+                    <!-- <filter string="Current Employee" name="current_employee" domain="[('employee_id.active','=',True)]"/> -->
+                    <separator/>
+                    <!-- <group expand="0" string="Group By">
+                        <filter string="Employee" domain="[]" context="{'group_by':'employee_id'}"/>
+                    </group> -->
+                </search>
+            </field>
+        </record>
+
+        <record id="rrhh_view_employee_prestamo_linea_form" model="ir.ui.view">
+            <field name="name">rrhh.employee.prestamo.linea.form</field>
+            <field name="model">rrhh.prestamo.linea</field>
+            <field name="arch" type="xml">
+                <form string="Montos">
+                    <group>
+                        <group>
+                            <field name="mes"/>
+                            <field name="monto"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_rrhh_prestamo" model="ir.actions.act_window">
+            <field name="name">Prestamos</field>
+            <field name="res_model">rrhh.prestamo</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('employee_id', '!=', False)]</field>
+            <field name="context">{'search_default_current':1, 'search_default_group_by_state': 1}</field>
+            <field name="search_view_id" ref="rrhh_prestamo_view_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+               Click para crear un nuevo prestamo.
+              </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="rrhh_menu_prestamo"
+            name="Prestamos"
+            action="action_rrhh_prestamo"
+            parent="hr.menu_hr_employee_payroll"
+            sequence="100"
+            groups="hr.group_hr_manager"/>
+  </data>
+</odoo>
+

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="recibo">
+        <t t-call="web.html_container">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <t t-foreach="docs" t-as="o">
+                <div class="article">
+                    <div class="page" style="font-size:13px">
+                        <div class="copia">
+                          <div class="text-right">
+                              <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                          </div>
+                            <h2>Recibo</h2>
+                            <strong>Compañia:</strong><span t-field="o.company_id.name"/>
+                            <p t-field="o.name"/>
+
+                            <p>
+                                Boleta de pago correspondiente al periodo del:
+                                <span t-field="o.date_from"/> al <span t-field="o.date_to"/>
+                            </p>
+
+                            <table style="margin: 0px auto;width:100%">
+                                <tbody>
+                                    <tr>
+                                        <t t-if="o.employee_id.codigo_empleado">
+                                            <td><strong>Codigo:</strong> <span t-field="o.employee_id.codigo_empleado"/></td>
+                                            <td><strong>Empleado:</strong> <span t-field="o.employee_id.name"/></td>
+                                        </t>
+                                        <t t-else="">
+                                            <td><strong>Empleado:</strong> <span t-field="o.employee_id.name"/></td>
+                                            <td></td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Departamento:</strong> <span t-field="o.employee_id.department_id.name"/></td>
+                                        <td><strong>Puesto:</strong> <span t-field="o.employee_id.job_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>No. afiliacion del IGSS:</strong><span t-field="o.employee_id.igss"/></td>
+                                        <td><strong>Cuenta analítica: </strong><span t-field="o.employee_id.contract_id.analytic_account_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sueldo base mensual:</strong> <span t-field="o.contract_id.wage"/></td>
+                                        <t t-set="horas" t-value="horas_extras(o)"/>
+                                        <td><strong>DPI: </strong><span t-field="o.employee_id.identification_id"/></td>
+                                        <t t-set="dias" t-value="0.0"/>
+                                        <tr t-foreach="o.worked_days_line_ids" t-as="i">
+                                            <t t-if="i.code == 'WORK100'">
+                                                <t t-set="dias" t-value="dias + i.number_of_days"/>
+                                            </t>
+                                        </tr>
+                                        <td><strong>Dias laborados:</strong> <span t-esc="dias"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <div class="centro" style="margin: 0 auto;">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Ingresos</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                    <tr>
+                                                        <t t-if="l[0]">
+                                                            <td><span t-esc="l[0]['nombre']"></span></td>
+                                                            <td><span t-esc="l[0]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                                    <td><span t-esc="lineas(o)['totales'][0]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Deducciones</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                    <tr>
+                                                        <t t-if="l[1]">
+                                                            <td><span t-esc="l[1]['nombre']"></span></td>
+                                                            <td><span t-esc="l[1]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                                    <td><span t-esc="lineas(o)['totales'][1]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <t t-set="horas" t-valu="0"/>
+                                        <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                            <t t-if="l[2]">
+                                                <t t-set="horas" t-value="1"/>
+                                            </t>
+                                        </t>
+                                        <t t-if="horas == 1">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td><strong>Horas extras</strong></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                        <tr>
+                                                            <t t-if="l[2]">
+                                                                <td><span t-esc="l[2]['nombre']"></span></td>
+                                                                <td><span t-esc="l[2]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                            </t>
+                                                        </tr>
+                                                    </t>
+                                                    <tr>
+                                                        <td>Subtotal</td>
+                                                        <td><span t-esc="lineas(o)['totales'][2]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="row mt32">
+                                <p>Liquido a recibir: <span t-esc="lineas(o)['totales'][0] + lineas(o)['totales'][1]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></p>
+                            </div>
+
+                            <div class="derecha" style="float:right">
+                                <div class="col-xs-5 col-xs-offset-7" style="border-top: 2px solid black">
+                                    <p class="text-center"><strong t-field="o.employee_id.name"></strong></p>
+                                </div>
+                            </div>
+                            <t t-if="o.move_id">
+                                <div class="row">
+                                    <p class="text-right">Fecha: <span t-field="o.move_id.date"/></p>
+                                </div>
+                            </t>
+                            <t t-if="not o.move_id">
+                                <p></p>
+                            </t>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="copia">
+                          <div class="text-right">
+                              <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                          </div>
+                            <h2>Recibo</h2>
+                            <strong>Compañia:</strong><span t-field="o.company_id.name"/>
+                            <p t-field="o.name"/>
+
+                            <p>
+                                Boleta de pago correspondiente al periodo del:
+                                <span t-field="o.date_from"/> al <span t-field="o.date_to"/>
+                            </p>
+
+                            <table style="margin: 0px auto;width:100%">
+                                <tbody>
+                                    <tr>
+                                        <t t-if="o.employee_id.codigo_empleado">
+                                            <td><strong>Codigo:</strong> <span t-field="o.employee_id.codigo_empleado"/></td>
+                                            <td><strong>Empleado:</strong> <span t-field="o.employee_id.name"/></td>
+                                        </t>
+                                        <t t-else="">
+                                            <td><strong>Empleado:</strong> <span t-field="o.employee_id.name"/></td>
+                                            <td></td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Departamento:</strong> <span t-field="o.employee_id.department_id.name"/></td>
+                                        <td><strong>Puesto:</strong> <span t-field="o.employee_id.job_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>No. afiliacion del IGSS:</strong><span t-field="o.employee_id.igss"/></td>
+                                        <td><strong>Cuenta analítica: </strong><span t-field="o.employee_id.contract_id.analytic_account_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sueldo base mensual:</strong> <span t-field="o.contract_id.wage"/></td>
+                                        <t t-set="horas" t-value="horas_extras(o)"/>
+                                        <td><strong>DPI: </strong><span t-field="o.employee_id.identification_id"/></td>
+                                        <t t-set="dias" t-value="0.0"/>
+                                        <tr t-foreach="o.worked_days_line_ids" t-as="i">
+                                            <t t-if="i.code == 'WORK100'">
+                                                <t t-set="dias" t-value="dias + i.number_of_days"/>
+                                            </t>
+                                        </tr>
+                                        <td><strong>Dias laborados:</strong> <span t-esc="dias"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <div class="centro" style="margin: 0 auto;">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Ingresos</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                    <tr>
+                                                        <t t-if="l[0]">
+                                                            <td><span t-esc="l[0]['nombre']"></span></td>
+                                                            <td><span t-esc="l[0]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                                    <td><span t-esc="lineas(o)['totales'][0]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Deducciones</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                    <tr>
+                                                        <t t-if="l[1]">
+                                                            <td><span t-esc="l[1]['nombre']"></span></td>
+                                                            <td><span t-esc="l[1]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                        </t>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td>Subtotal</td>
+                                                    <td><span t-esc="lineas(o)['totales'][1]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <t t-set="horas" t-valu="0"/>
+                                        <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                            <t t-if="l[2]">
+                                                <t t-set="horas" t-value="1"/>
+                                            </t>
+                                        </t>
+                                        <t t-if="horas == 1">
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td><strong>Horas extras</strong></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <t t-foreach="lineas(o)['lineas']" t-as="l">
+                                                        <tr>
+                                                            <t t-if="l[2]">
+                                                                <td><span t-esc="l[2]['nombre']"></span></td>
+                                                                <td><span t-esc="l[2]['total']" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                            </t>
+                                                        </tr>
+                                                    </t>
+                                                    <tr>
+                                                        <td>Subtotal</td>
+                                                        <td><span t-esc="lineas(o)['totales'][2]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="row mt32">
+                                <p>Liquido a recibir: <span t-esc="lineas(o)['totales'][0] + lineas(o)['totales'][1]" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/></p>
+                            </div>
+
+                            <div class="derecha" style="float:right">
+                                <div class="col-xs-5 col-xs-offset-7" style="border-top: 2px solid black">
+                                    <p class="text-center"><strong t-field="o.employee_id.name"></strong></p>
+                                </div>
+                            </div>
+                            <t t-if="o.move_id">
+                                <div class="row">
+                                    <p class="text-right">Fecha: <span t-field="o.move_id.date"/></p>
+                                </div>
+                            </t>
+                            <t t-if="not o.move_id">
+                                <p></p>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

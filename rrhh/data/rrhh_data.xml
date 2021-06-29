@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="TipoEstructuraEmpleado" model="hr.payroll.structure.type">
+            <field name="name">Empleado</field>
+            <field name="wage_type">monthly</field>
+            <field name="default_work_entry_type_id">1</field>
+        </record>
+
+        <record id="TipoEntradaTrabjo" model="hr.work.entry.type">
+            <field name="name">Trabajo 100</field>
+            <field name="code">TRABAJO100</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="EstructuraBase" model="hr.payroll.structure">
+            <field name="name">Estructura Base</field>
+            <field name="type_id" ref="TipoEstructuraEmpleado"/>
+        </record>
+
+        <record id="HrSalaryRule_01" model="hr.salary.rule">
+            <field name="name">Sueldo Base</field>
+            <field name="category_id">2</field>
+            <field name="code">BASE</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1.1</field>
+            <field name="amount_percentage">100.00</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_02" model="hr.salary.rule">
+            <field name="name">Bonificacion Incentivo</field>
+            <field name="category_id">2</field>
+            <field name="code">BonDecreto</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">250/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">100.00</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_03" model="hr.salary.rule">
+            <field name="name">Bono 14 (8.333%)</field>
+            <field name="category_id">2</field>
+            <field name="code">B14</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">8.3330</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_04" model="hr.salary.rule">
+            <field name="name">Aguinaldo (8.333%)</field>
+            <field name="category_id">2</field>
+            <field name="code">AGUIN</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">8.3330</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_05" model="hr.salary.rule">
+            <field name="name">Vacaciones (4.17%)</field>
+            <field name="category_id">2</field>
+            <field name="code">VACACIONES</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">4.1700</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_06" model="hr.salary.rule">
+            <field name="name">Indemnizacion (9.72%)</field>
+            <field name="category_id">2</field>
+            <field name="code">INDEMN</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">9.7200</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_07" model="hr.salary.rule">
+            <field name="name">Otros Descuentos</field>
+            <field name="category_id">4</field>
+            <field name="code">Descee</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">0</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_08" model="hr.salary.rule">
+            <field name="name">Prestamos</field>
+            <field name="category_id">4</field>
+            <field name="code">Prestamos</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">0</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_10" model="hr.salary.rule">
+            <field name="name">IGSS Laboral (4.83%)</field>
+            <field name="category_id">4</field>
+            <field name="code">IGSSLab</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">-4.8300</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_11" model="hr.salary.rule">
+            <field name="name">IGSS Patronal (12.67%)</field>
+            <field name="category_id">2</field>
+            <field name="code">IGSSPAT</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base">contract.wage/2</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">12.6700</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+        <record id="HrSalaryRule_12" model="hr.salary.rule">
+            <field name="name">Anticipos Sueldo</field>
+            <field name="category_id">4</field>
+            <field name="code">Anticipo/sueldo</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">fix</field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">0</field>
+            <field name="struct_id" ref="EstructuraBase"/>
+        </record>
+
+    </data>
+</odoo>

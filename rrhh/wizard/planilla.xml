@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_planilla_wizard_form" model="ir.ui.view">
+            <field name="name">planilla_wizard.form</field>
+            <field name="model">rrhh.planilla.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Planillas">
+                    <group>
+                        <group>
+                            <field name="nomina_id"/>
+                            <field name="planilla_id"/>
+                        </group>
+                        <group>
+                            <field name="agrupado"/>
+                            <field name="name" colspan="4" invisible="1"/>
+                            <field name="archivo" filename="name" readonly="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="generar" string="Generar" type="object" class="oe_highlight"/>
+                        or
+                        <button name="generar_pdf" string="Generar PDF" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window id="action_planilla_wizard"
+            name="Planilla"
+            target="new"
+            binding_model="hr.payslip.run"
+            res_model="rrhh.planilla.wizard"
+            view_mode="form"/>
+        />
+
+        <report
+            id="action_planilla_pdf"
+            string="Planilla PDF"
+            model="rrhh.planilla.wizard"
+            report_type="qweb-pdf"
+            file="rrhh.planilla_pdf"
+            name="rrhh.planilla_pdf"
+            paperformat ="paperformat_libro_salarios"
+            menu="False"
+        />
+
+</odoo>

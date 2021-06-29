@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="rrhh_recibo"
+            string="Recibo de pago"
+            model="hr.payslip"
+            report_type="qweb-pdf"
+            file="rrhh.recibo"
+            name="rrhh.recibo"
+        />
+
+        <report
+            id="action_libro_salarios"
+            string="Libro de salarios"
+            model="hr.employee"
+            report_type="qweb-pdf"
+            file="rrhh.libro_salarios"
+            name="rrhh.libro_salarios"
+            paperformat ="paperformat_libro_salarios"
+            menu="False"
+        />
+
+        <report
+            id="action_informe_empleador"
+            string="Informe del empleador"
+            model="hr.employee"
+            report_type="qweb-pdf"
+            file="rrhh.informe_empleador"
+            name="rrhh.informe_empleador"
+            menu="False"
+        />
+    </data>
+</odoo>
