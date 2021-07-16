@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_cus" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.stock</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="31"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]//div[@data-key='stock']" position="inside">
+                    <h2>Alerta por correo electrónico de vencimiento del producto</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="mailsend_check"/>
+                            </div>
+                            <div class="o_setting_right_pane" id="barcode_settings">
+                                <label for="mailsend_check"/>
+                                <div class="text-muted">
+                                    Enviar Correo Electrónico de Vencimiento del Producto
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16" attrs="{'invisible': [('mailsend_check','=',False)]}">
+                                        <span>La notificación por correo electrónico para el producto caduca en
+                                            <field name="email_notification_days" class="oe_inline"
+                                                   style="width:20% !important"/>
+                                            días
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16" attrs="{'invisible': [('mailsend_check','=',False)]}">
+                                        <span>Correo de alerta de vencimiento del producto enviado al usuario
+                                            <field name="res_user_ids" class="oe_inline" widget="many2many_tags"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+ 
+ 	<record id="res_config_groups_form" model="ir.ui.view">
+            <field name="name">res.config.settings.groups.view.form.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]//div[@id='production_lot_info']" position="after">
+                    <h2>Producto sin Movimiento</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div>
+                                <label for="groups_ids"/>
+                                <field name="groups_ids" widget="many2many_tags"/>
+                                <div class="text-muted">
+                                    Enviar correo a los usuarios que pertenecen a los grupos.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+ 
+ 
+    </data>
+</odoo>

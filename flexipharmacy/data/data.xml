@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="email_template_pos_ereceipt_reservation" model="mail.template">
+            <field name="name">POS Order - Reservation Send by Email</field>
+            <field name="email_from">${(object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">Order Reference ${object.name or ''}</field>
+            <field name="email_to">${object.customer_email}</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name">Order_${object.name or ''}</field>
+            <field name="body_html"><![CDATA[
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                
+                    <p>Hello ${object.partner_id and object.partner_id.name or ''},</p>
+                
+                    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+                       &nbsp;&nbsp;<strong>REFERENCES</strong><br />
+                       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />
+                       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.company_id.currency_id.name}</strong><br />
+                       &nbsp;&nbsp;Order date: ${object.date_order}<br />
+                       &nbsp;&nbsp;Delivery date: ${object.reserve_delivery_date or '-'}<br />
+                       % if object.user_id:
+                       &nbsp;&nbsp;Cashier: ${object.user_id.name}
+                       % endif
+                    </p>
+                    <p> Product Details </p>
+                    % if object.lines:
+                        <table class="table" style="width:60%;">
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;">Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Discount %</th>
+                                    <th style="width: 130px;">Total(${object.company_id.currency_id.name})</td>
+                                <tr>
+                                % for line in object.lines:
+                                    <tr>
+                                        <td style="text-align:left;">${line.product_id.name}</td>
+                                        <td style="text-align:center">${line.qty}</td>
+                                        <td style="text-align:center">${line.price_unit}</td>
+                                        <td style="text-align:center">${line.discount}</td>
+                                        <td style="text-align:center">${line.price_subtotal_incl}</td>
+                                    </tr>
+                                % endfor
+                                <tr>
+                                    <td colspan="4"><strong>Tax</strong></td>
+                                    <td style="text-align:center">${round(object.amount_tax, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Paid</strong></td>
+                                    <td style="text-align:center">${round(object.amount_paid, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Due</strong></td>
+                                    <td style="text-align:center">${round(object.amount_due, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Total Amount</strong></td>
+                                    <td style="text-align:center">${round(object.amount_total, 2)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    % endif
+                    % if object.note:
+                        <br/>
+                        Note: ${object.note}
+                        <br/>
+                    % endif
+                    <br/>
+                    <p>Thank you for choosing ${object.company_id.name or 'us'} !</p>
+                    <br/>
+                    <br/>
+                    <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+                        <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+                            <strong style="text-transform:uppercase;">${object.company_id.name}</strong></h3>
+                    </div>
+                    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+                        <span style="color: #222; margin-bottom: 5px; display: block; ">
+                        % if object.company_id.street:
+                            ${object.company_id.street}<br/>
+                        % endif
+                        % if object.company_id.street2:
+                            ${object.company_id.street2}<br/>
+                        % endif
+                        % if object.company_id.city or object.company_id.zip:
+                            ${object.company_id.zip} ${object.company_id.city}<br/>
+                        % endif
+                        % if object.company_id.country_id:
+                            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+                        % endif
+                        </span>
+                        % if object.company_id.phone:
+                            <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+                                Phone:&nbsp; ${object.company_id.phone}
+                            </div>
+                        % endif
+                        % if object.company_id.website:
+                            <div>
+                                Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+                            </div>
+                        %endif
+                        <p></p>
+                    </div>
+                </div>
+            ]]></field>
+        </record>
+
+        <record id="email_template_pos_ereceipt" model="mail.template">
+            <field name="name">POS Order - Send by Email</field>
+            <field name="email_from">${(object.company_id.email or 'noreply@localhost')|safe}</field>
+            <field name="subject">Order Reference ${object.name or ''}</field>
+            <field name="email_to">${object.customer_email}</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="report_name">Order_${object.name or ''}</field>
+            <field name="body_html"><![CDATA[
+				<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+				
+				    <p>Hello ${object.partner_id and object.partner_id.name or ''},</p>
+				
+				    <p style="border-left: 1px solid #8e0000; margin-left: 30px;">
+				       &nbsp;&nbsp;<strong>REFERENCES</strong><br />
+				       &nbsp;&nbsp;Order number: <strong>${object.name}</strong><br />
+				       &nbsp;&nbsp;Order total: <strong>${object.amount_total} ${object.company_id.currency_id.name}</strong><br />
+   				       &nbsp;&nbsp;Order date: ${object.get_timezone_date_order()[0]}<br />
+				       % if object.reserve_delivery_date:
+                           &nbsp;&nbsp;Delivery date: ${object.reserve_delivery_date or '-'}<br />
+                       % endif
+				       
+				       % if object.user_id:
+				       &nbsp;&nbsp;Cashier: ${object.user_id.name}
+				       % endif
+				    </p>
+				    <p> Product Details </p>
+				    % if object.lines:
+				        <table border=1>
+				            <tbody border=1>
+				            <tr>
+				                <th>Product Name</th>
+				                <th>Quantity</th>
+				                <th>Unit Price</th>
+				                <th>Discount %</th>
+				                <th>Total(${object.company_id.currency_id.name})</td>
+				            <tr>
+				            % for line in object.lines:
+				                <tr>
+				                    <td>${line.product_id.name}</td>
+				                    <td style="text-align:right">${line.qty}</td>
+				                    <td style="text-align:right">${line.price_unit}</td>
+				                    <td style="text-align:right">${line.discount}</td>
+				                    <td style="text-align:right">${line.price_subtotal_incl}</td>
+				                </tr>
+				             % endfor
+				             <tr>
+				                <td colspan="4"><strong>Tax</strong></td>
+				                <td style="text-align:right">${object.amount_tax}</td>
+				             </tr>
+				             <tr>
+                                    <td colspan="4"><strong>Amount Paid</strong></td>
+                                    <td style="text-align:right">${round(object.amount_paid, 2)}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><strong>Amount Due</strong></td>
+                                    <td style="text-align:right">${round(object.amount_due, 2)}</td>
+                                </tr>
+				             <tr>
+				                <td colspan="4"><strong>Total Amount</strong></td>
+				                <td style="text-align:right">${object.amount_total}</td>
+				             </tr>
+				             </tbody>
+				        </table>
+				    % endif
+				    % if object.note:
+                        <br/>
+                        Note: ${object.note}
+                        <br/>
+                    % endif
+				    <br/>
+				    <p>Thank you for choosing ${object.company_id.name or 'us'} !</p>
+				    <br/>
+				    <br/>
+				    <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
+				        <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
+				            <strong style="text-transform:uppercase;">${object.company_id.name}</strong></h3>
+				    </div>
+				    <div style="width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;">
+				        <span style="color: #222; margin-bottom: 5px; display: block; ">
+				        % if object.company_id.street:
+				            ${object.company_id.street}<br/>
+				        % endif
+				        % if object.company_id.street2:
+				            ${object.company_id.street2}<br/>
+				        % endif
+				        % if object.company_id.city or object.company_id.zip:
+				            ${object.company_id.zip} ${object.company_id.city}<br/>
+				        % endif
+				        % if object.company_id.country_id:
+				            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br/>
+				        % endif
+				        </span>
+				        % if object.company_id.phone:
+				            <div style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; ">
+				                Phone:&nbsp; ${object.company_id.phone}
+				            </div>
+				        % endif
+				        % if object.company_id.website:
+				            <div>
+				                Web :&nbsp;<a href="${object.company_id.website}">${object.company_id.website}</a>
+				            </div>
+				        %endif
+				        <p></p>
+				    </div>
+				</div>
+            ]]></field>
+        </record>
+
+        <record id="email_template_for_coupon_expire_7" model="mail.template">
+            <field name="name">Coupon Expire</field>
+            <field name="email_from">${(user.email or '')}</field>
+            <field name="subject">Regarding expired your gift card</field>
+            <field name="email_to">${object.customer_id.email}</field>
+            <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card will be expired on ${object.expire_date}.Please renew your card ${object.card_no}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+        </record>
+
+        <record id="email_template_regarding_balance" model="mail.template">
+            <field name="name">Regarding balance of your gift card</field>
+            <field name="email_from">${(user.email or '')}</field>
+            <field name="subject">Regarding balance of your gift card</field>
+            <field name="email_to">${object.customer_id.email}</field>
+            <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card ${object.card_no} have balance ${object.card_value}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+        </record>
+
+        <record id="email_template_exchange_number" model="mail.template">
+            <field name="name">Regarding change gift card number</field>
+            <field name="email_from">${(user.email or '')}</field>
+            <field name="subject">Regarding change gift card number</field>
+            <field name="email_to">${object.customer_id.email}</field>
+            <field name="model_id" ref="flexipharmacy.model_aspl_gift_card"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       Your card number has been updated. It has been changed to ${object.card_no}.<br/>
+       Thanks for using our services.
+   </p>
+   </p>
+   <br/>
+   Thank You,
+   <br/>
+   ${user.name}
+</div>
+           ]]></field>
+        </record>
+
+        <record id="email_template_regarding_card_use" model="mail.template">
+            <field name="name">Regarding Card Use</field>
+            <field name="email_from">${(user.email or '')}</field>
+            <field name="subject">Regarding Card Use</field>
+            <field name="email_to">${object.customer_id.email}</field>
+            <field name="model_id" ref="flexipharmacy.model_aspl_gift_card_use"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+   <p>Hello ${object.customer_id.name}
+   <br/>
+   <p style="margin-left: 50px;">
+       <p>Your card ${object.card_id.card_no} has been used at our store with following details.</p><br/>
+                                  <b>Receipt Reference </b>: ${object.pos_order_id.pos_reference}<br/>
+                                  <b>Order No</b>     : ${object.pos_order_id.name}<br/>
+                                  <b>Order Date</b>   : ${object.order_date}<br/>
+                                  <b>Order Amount</b> : ${object.pos_order_id.amount_total}<br/>
+                                  <b>Card Amount</b>  : ${object.amount}
+                                <p>Thanks for using our services.</p>
+                                <p>Regards,</p>
+                                <p> ${user.name}</p>
+   </p>
+   </p>
+</div>
+           ]]></field>
+        </record>
+
+        <record id="aspl_gift_card_product" model="product.product">
+            <field name="name">Gift Card Product</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="is_dummy_product">True</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+        <record id="aspl_gift_card_product_type_gold" model="aspl.gift.card.type">
+            <field name="name">Gold</field>
+            <field name="code">001</field>
+        </record>
+        <record id="aspl_gift_card_product_type_silver" model="aspl.gift.card.type">
+            <field name="name">Silver</field>
+            <field name="code">002</field>
+        </record>
+        <record id="aspl_gift_card_product_type_platinum" model="aspl.gift.card.type">
+            <field name="name">Platinum</field>
+            <field name="code">003</field>
+        </record>
+        <record id="aspl_gift_card_product" model="product.product">
+            <field name="name">Gift Card Product</field>
+            <field name="available_in_pos">True</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="is_dummy_product">True</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+        <record id="wallet_product_1" model="product.product">
+            <field name="name">From Wallet</field>
+            <field name="default_code">Wallet</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="is_dummy_product">True</field>
+            <field name="available_in_pos" eval="True"/>
+            <field name="list_price">0</field>
+            <field name="type">service</field>
+            <!--<field name="uom_id" ref="uom.product_uom_unit"/>-->
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+        </record>
+    </data>
+
+    <data>
+
+        <record id="bags_prod" model="product.product">
+            <field name="name">Bag</field>
+            <field name="available_in_pos">True</field>
+            <field name="list_price">5.00</field>
+            <field name="type">consu</field>
+            <field name="is_packaging">True</field>
+            <field name="is_dummy_product">True</field>
+            <field name="taxes_id"/>
+            <field name="supplier_taxes_id"/>
+            <field name="image_medium">
+                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
+            </field>
+        </record>
+
+        <record forcecreate="True" id="expiration_coupon" model="ir.cron">
+            <field name="name">Expiration Coupon Mail</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_aspl_gift_card"/>
+            <field name="state">code</field>
+            <field name="code">model._send_mail_balance_and_expired_coupon(True, False)</field>
+            <field name="args">(True,False)</field>
+        </record>
+
+        <record forcecreate="True" id="regarding_balance" model="ir.cron">
+            <field name="name">Regarding Balance</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_aspl_gift_card"/>
+            <field name="state">code</field>
+            <field name="code">model._send_mail_balance_and_expired_coupon(False, True)</field>
+        </record>
+
+
+       <!-- <record id="pos_agent_commission_sequence" model="ir.sequence">
+            <field name="name">Point of Sale Doctor Commission Number</field>
+            <field name="code">pos.agent.commission.number</field>
+            <field name="prefix">COMM</field>
+            <field name="padding">4</field>
+        </record>-->
+        <record id="pos_agent_commission_sequence" model="ir.sequence">
+            <field name="name">Point of Sale Doctor Commission Number</field>
+            <field name="code">pos.agent.commission.number</field>
+            <field name="prefix">COMM/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="pos_agent_commission_cron" model="ir.cron">
+            <field name="name">Point of Sale: Doctor Commission Payment</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.pos_payment_cron()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+    </data>
+</odoo>

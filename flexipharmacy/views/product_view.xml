@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="delivery_charge" model="product.product">
+        <field name="available_in_pos">True</field>
+        <field name="list_price">0</field>
+        <field name="is_dummy_product">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id"/>
+        <field name="type">service</field>
+        <field name="name">Delivery Charge</field>
+    </record>
+
+    <record id="acespritech_pharmacy_payment_charge_product" model="product.product">
+        <field name="name">Payment Charges</field>
+        <field name="list_price">0</field>
+        <field name="type">service</field>
+        <field name="available_in_pos">True</field>
+        <field name="is_dummy_product">True</field>
+        <field name="sale_ok">True</field>
+        <field name="taxes_id"/>
+        <field name="supplier_taxes_id"/>
+    </record>
+
+    <record id="package_product_template_only_form_view" model="ir.ui.view">
+        <field name="name">package.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="to_weight" position="after">
+                <field name="loyalty_point"/>
+                <field name="non_refundable"/>
+                <field name="return_valid_days" attrs="{'invisible': [('non_refundable', '=', True)]}"/>
+            </field>
+            <field name="sale_ok" position="before">
+                <div>
+                    <field name="product_brand_id" placeholder="Brand"/>
+                </div>
+                <div>
+                    <field name="is_packaging"/>
+                    <label for="is_packaging"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="aspl_pos_category_form" model="ir.ui.view">
+        <field name="name">aspl.pos.category.form.view</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="loyalty_point"/>
+                <field name="return_valid_days"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_product_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.purchase</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <button name="toggle_active" position="before">
+                <button class="oe_stat_button" name="nearly_expired" icon="fa-building-o" type="object">
+                    <field name="near_expire" widget="statinfo" string="Casi Vencido"/>
+                </button>
+                <button class="oe_stat_button" name="product_expired" type="object" icon="fa-building-o">
+                    <field string="Vencido" name="expired" widget="statinfo"/>
+                </button>
+            </button>
+        </field>
+    </record>
+
+    <record id="product_expiry_config_form_view" model="ir.ui.view">
+        <field name="name">product.expiry.config.form.view</field>
+        <field name="model">product.expiry.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="no_of_days"/>
+                        <field name="active"/>
+                        <field name="block_color" placeholder="Eg. #FFFFFF / red"/>
+                        <field name="text_color" placeholder="Eg. #FFFFFF / red"/>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="product_expiry_config_tree_view" model="ir.ui.view">
+        <field name="name">product.expiry.config.form.view</field>
+        <field name="model">product.expiry.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="no_of_days"/>
+                <field name="active"/>
+                <field name="block_color"/>
+                <field name="text_color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_expiry_config" model="ir.actions.act_window">
+        <field name="name">Product Expiry Configuration</field>
+        <field name="res_model">product.expiry.config</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_product_expiry_config" parent="stock.menu_stock_config_settings" sequence="105"
+              action="action_product_expiry_config"/>
+
+</odoo>

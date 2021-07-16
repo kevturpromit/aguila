@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3: -->
+<odoo>
+
+    <record id="aspl_security_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]//div[@data-key='point_of_sale']" position="inside">
+                <div id="business_documents" data-string="Point of sale" string="Point of Sale"
+                     data-key="point_of_sale">
+                    <h2>Características Módulo de Gestión de Farmacias</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="is_rfid_login"/>
+                                <div class="text-muted">
+                                        Iniciar sesión con RDIF dentro de Pos
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="is_rfid_login" string="RFID POS Login"
+                                               class="col-xs-3 col-md-3 o_light_label"/>
+                                        <field name="is_rfid_login" class="oe_inline" style="min-width: 65%;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="google_api_key"/>
+                                <div class="text-muted">
+                                    Google API Key
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="google_api_key" string="Google API Key"
+                                               class="col-xs-3 col-md-3 o_light_label"/>
+                                        <field name="google_api_key" class="oe_inline" style="min-width: 65%;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="theme_selector"/>
+                                <div class="text-muted">
+                                    Tema
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="theme_selector" string="Theme"
+                                               class="col-xs-3 col-md-3 o_light_label"/>
+                                        <field name="theme_selector" class="oe_inline" style="min-width: 65%;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="bday_tmpl_id"/>
+                                <div class="text-muted">
+                                    Seleccionar Plantilla de Cumpleaños
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="bday_tmpl_id" string="Birthday Template"
+                                               class="col-xs-3 col-md-3 o_light_label"/>
+                                        <field name="bday_tmpl_id" class="oe_inline" style="min-width: 65%;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="anniversary_tmpl_id"/>
+                                <div class="text-muted">
+                                    Seleccionar Plantilla de Aniversario
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16 row">
+                                        <label for="anniversary_tmpl_id" string="Anniversary Template"
+                                               class="col-xs-3 col-md-3 o_light_label"/>
+                                        <field name="anniversary_tmpl_id" class="oe_inline" style="min-width: 65%;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+<!--             Commission Part Started -->
+            <xpath expr="//div[hasclass('settings')]/div[@data-key='point_of_sale']" position="inside">
+                <h2>PoS Comisiones</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="is_pos_agent_commission" class="col-md-3 o_light_label"
+                                           style="font-weight:bold;"/>
+                                    <field name="is_pos_agent_commission"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt16 o_settings_container" attrs="{'invisible':[('is_pos_agent_commission', '=', False)]}">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pos_commission_calculation" class="col-md-3 o_light_label"
+                                           style="font-weight:bold;"/>
+                                    <field name="pos_commission_calculation"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pos_commission_based_on" class="col-md-3 o_light_label"
+                                           style="font-weight:bold;"/>
+                                    <field name="pos_commission_based_on"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pos_commission_with" class="col-md-3 o_light_label"
+                                           style="font-weight:bold;"/>
+                                    <field name="pos_commission_with"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+<!--             Commission Part Ended -->
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_res_config_form_inherit">
+        <field name="name">sale config inherit form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='sale_ebay']" position="after">
+                <h2>Generar Código de Barras de Producto</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="gen_barcode"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="gen_barcode"/>
+                            <div class="content-group" attrs="{'invisible':[('gen_barcode','=',False)]}">
+                                <div class="mt16">
+                                    <label for="barcode_selection"/>
+                                    <div style="position:absolute;right:16%;top:32px;width:40%;">
+                                        <field name="barcode_selection"
+                                               attrs="{'required':[('gen_barcode','!=',False)]}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2>Referencia Interna de Producto</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="gen_internal_ref"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="gen_internal_ref"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pos_account_res_config_settings_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.from</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]/div[@data-key='account']" position="inside">
+                <h2>Comisiones POS</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="pos_account_id" class="col-md-3 o_light_label"
+                                           style="font-weight:bold;"/>
+                                    <field name="pos_account_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

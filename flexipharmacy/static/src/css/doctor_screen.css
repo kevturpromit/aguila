@@ -1,0 +1,341 @@
+.pos .doctor-screen .searchbox {
+    right: auto;
+    left: 22%;
+}
+
+.pos .doctor-screen .doctor-details{
+    width: 100%;
+}
+
+.pos .doctor-screen .button.new-doctor {
+    left: 50%;
+    margin-left: 120px;
+}
+
+.pos .doctor-screen .delivery-details {
+    padding: 16px;
+    border-bottom: none !important;
+}
+
+.pos .doctor-screen.screen .map-top-header {
+    box-shadow: 0 0 4px 0 #333;
+}
+
+.pos .doctor-screen .doctor-picture > img {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    right: -9999px;
+    left: -9999px;
+    max-height: 64px;
+    margin: auto;
+}
+
+.pos .doctor-screen .doctor-picture > .fa {
+    line-height: 64px;
+    font-size: 32px;
+}
+
+.pos .doctor-screen .doctor-picture .image-uploader {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.pos .doctor-screen.screen .map-top-header {
+    float: left;
+    width: 100%;
+    margin-bottom: 18px;
+    margin-top: 10px;
+    position: relative;
+    max-width: 97%;
+    margin: 10px;
+    line-height: 29px;
+}
+
+.pos .doctor-screen .doctor_first_part {
+    max-width: 643px;
+    width: 100%;
+    color: #333;
+}
+
+.pos .doctor-screen .doctor-details input.doctor-name {
+    font-size: 24px;
+    line-height: 24px;
+    margin: 18px 6px;
+    width: 340px;
+}
+
+.pos .doctor-screen .doctor-list {
+    font-size: 16px;
+    width: 100%;
+    line-height: 40px;
+}
+
+.pos .doctor-screen .doctor-list th,
+.pos .doctor-screen .doctor-list td {
+    padding: 0px 17px;
+    font-size: 16px;
+}
+
+.pos .doctor-screen .doctor-list tr {
+    transition: all 150ms linear;
+    border-bottom: 1px solid #333;
+}
+
+.pos .doctor-screen .doctor-name {
+    font-size: 32px;
+    line-height: 64px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 0px 0 #333;
+}
+
+.pos .doctor-screen .edit-buttons .button {
+    display: inline-block;
+    margin-left: 16px;
+    color: rgb(128,128,128);
+    cursor: pointer;
+    font-size: 36px;
+}
+
+.pos .doctor-screen .edit-buttons {
+    position: absolute;
+    right: 30px;
+    top: 12px;
+}
+
+.pos .doctor-screen .doctor-detail>.label {
+    font-size: 16px;
+    text-align: left;
+}
+
+.pos .doctor-screen .doctor-detail > .label {
+    font-weight: bold;
+    display: inline-block;
+    width: 75px;
+    margin-right: 8px;
+}
+
+.pos .doctor-screen .doctor-details input,
+.pos .doctor-screen .doctor-details select {
+    background: #f1efef;
+    width: 300px;
+}
+
+.pos .doctor-screen .doctor-details input,
+.pos .doctor-screen .doctor-details select {
+    padding: 4px;
+    border-radius: 3px;
+    border: solid 1px #cecbcb;
+    margin-bottom: 4px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    color: #555555;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.pos .doctor-screen .doctor-details-left {
+    width: 100%;
+    float: left;
+    padding-left: 0;
+    position: relative;
+    max-width: 100%;
+}
+
+.pos .doctor-screen .doctor-details-right {
+    width: 100%;
+    float: right;
+    position: relative;
+    padding: 0;
+    max-width: 50%;
+}
+
+.pos .doctor-screen .doctor-detail {
+    line-height: 24px;
+    font-size: 16px;
+}
+
+.pos .doctor-screen .doctor-picture {
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    overflow: hidden;
+    text-align: center;
+    float: left;
+    margin-right: 16px;
+    background: white;
+    position: relative;
+}
+
+.pos .doctor-screen .screen-content {
+	max-width: 1360px !important;
+}
+
+.pos .doctor-screen .client-details input, .pos .doctor-screen .client-details select
+{
+	width: 210px;
+}
+
+#show_customers {
+	margin-left: -11%;
+}
+
+.doctor-screen .customer_screen_map_search .searchboxcustom {
+	right: auto;
+	margin-left: -140px;
+	left: 83%;
+	position: absolute;
+	top: 3px;
+}
+
+.customer_screen_map_search {
+	margin-bottom: 3px;
+	margin-left: -9px;
+	float: right;
+}
+
+.doctor-screen .input_map_search {
+	width: 149px;
+	border: 1px solid #cecbcb;
+	padding: 0px 33px;
+	background: url(/point_of_sale/static/src/css/../img/search.png)
+		no-repeat 15px;
+	background-color: rgba(0, 0, 0, 0);
+	background-color: white;
+	height: 30px;
+	margin: 3px;
+}
+
+.pos .doctor-screen .map_search_clear_box {
+	position: absolute;
+	width: 30px;
+	
+}
+
+.pos .doctor-screen .doctor-list {
+	font-size: 16px !important;
+}
+
+#search_map_box_popup {
+	border-radius: 20px;
+	border: none;
+	width: 100%;
+}
+
+#search_map_box_popup :focus {
+	outline: none;
+	box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset;
+	color: rgb(153, 153, 255);
+}
+/* NOTIFICATION */
+.alert {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	position: relative;
+	z-index: 999999;
+}
+
+.alert h4 {
+	margin-top: 0;
+	color: inherit;
+}
+
+.alert .alert-link {
+	font-weight: bold;
+}
+
+.alert>p, .alert>ul {
+	margin-bottom: 0;
+}
+
+.alert>p+p {
+	margin-top: 5px;
+}
+
+.alert-dismissable, .alert-dismissible {
+	padding-right: 35px;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+	position: relative;
+	top: -2px;
+	right: -21px;
+	color: inherit;
+}
+
+.alert-success {
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+
+.alert-success hr {
+	border-top-color: #c9e2b3;
+}
+
+.alert-success .alert-link {
+	color: #2b542c;
+}
+
+.alert-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+
+.alert-info hr {
+	border-top-color: #a6e1ec;
+}
+
+.alert-info .alert-link {
+	color: #245269;
+}
+
+.alert-warning {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
+.alert-warning hr {
+	border-top-color: #f7e1b5;
+}
+
+.alert-warning .alert-link {
+	color: #66512c;
+}
+
+.alert-danger {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+.alert-danger hr {
+	border-top-color: #e4b9c0;
+}
+
+.alert-danger .alert-link {
+	color: #843534;
+}
+
+@media screen and (min-width:768px) and (max-width:1024px) {
+	.doctor-screen .input_map_search {
+		width: 123px;
+		border: 1px solid #cecbcb;
+		padding: 0px 34px;
+		background: url(/point_of_sale/static/src/css/../img/search.png)
+			no-repeat 15px;
+		background-color: rgba(0, 0, 0, 0);
+		background-color: white;
+		height: 30px;
+		margin: 0px;
+	}
+}

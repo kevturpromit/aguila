@@ -1,0 +1,209 @@
+.variant-screen .variant-header .product-qty-low {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	vertical-align: top;
+	line-height: 13px;
+	padding: 2px 2px;
+	border-radius: 2px;
+	font-size: 13px;
+	color: #fff;
+	background: red;
+}
+
+.variant-screen .variant-header .product-qty {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	vertical-align: top;
+	line-height: 13px;
+	padding: 2px 2px;
+	border-radius: 2px;
+	font-size: 13px;
+	background: #7f82ac;
+	color: #fff;
+}
+
+.pos .variant-screen .screen-content {
+	border: none !important;
+}
+
+.pos .variant-screen .variant-title {
+	height: 8%;
+}
+
+.pos .variant-screen .variant-title #variant-popup-cancel {
+	margin: -10px 3px 3px 3px;
+}
+
+.pos .variant-screen .container-attribute-list {
+	width: 100%;
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.pos .variant-screen .container-variant-list {
+	width: 100%;
+	max-height: calc(100vh - 120px);
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.pos .variant-list {
+	padding: 10px;
+	text-align: left;
+	-webkit-transform: translate3d(0, 0, 0);
+}
+
+/*  ********* Attribut Display  ******************************************** */
+.pos .attribute {
+	position: relative;
+	width: 100%;
+	vertical-align: top;
+	display: inline-block;
+}
+
+.pos .attribute .attribute-name {
+	float: left;
+	font-size: 16px;
+	width: 20%;
+	overflow: hidden;
+	background: #FFF !important;
+	padding: 0 7px;
+	margin-top: 5px;
+	height: 40px;
+	line-height: 40px;
+	width: 136px;
+	border: 1px solid #333;
+}
+
+.pos .attribute .value-list-container {
+	width: 98%;
+	float: left;
+	margin-left: 2%;
+}
+
+.pos .attribute .selected {
+	background-color: #6EC89B !important;
+	font-size: 16px;
+	color: #FFF !important;
+}
+
+.pos .attribute .attribute-value {
+	float: left;
+	width: 23%;
+	padding-right: 10px;
+}
+
+.pos .attribute .attribute-value .button {
+	width: 100%;
+	background: #FFF;
+	border: 1px solid #333;
+	margin: 10px 2px;
+}
+
+.pos .attribute .attribute-value .attribute-value-header {
+	width: 100%;
+	height: 15px;
+	text-align: right;
+}
+
+.pos .attribute .attribute-value .attribute-value-name {
+	width: 100%;
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+	font-size: 16px;
+	text-align: left;
+	padding: 2px;
+}
+
+.pos .attribute .attribute-value .variant-quantity {
+	position: relative;
+	top: 0px;
+	right: 0px;
+	vertical-align: top;
+	color: #FFF;
+	line-height: 13px;
+	background: none repeat scroll 0% 0% #7F82AC;
+	padding: 1px 5px;
+	border-radius: 0px;
+	font-size: 12px;
+	margin-right: 0px;
+}
+
+/*  ********* Variant Display  ********************************************* */
+/* This part is a copy paste from Odoo Project, with some values changed     */
+.pos .variant {
+	position: relative;
+	vertical-align: top;
+	display: inline-block;
+	font-size: 11px;
+	margin: 5px 2px !important;
+	width: 115px;
+	height: 121px;
+	background: #fff;
+	border: 1px solid #333;
+	border-radius: 3px;
+	border-bottom-width: 3px;
+	overflow: hidden;
+	box-shadow: none;
+	cursor: pointer;
+	border: 1px solid;
+	box-shadow: 0px 0px 2px 0px #333;
+}
+
+.pos .variant .variant-header {
+	position: relative;
+	width: 115px;
+	height: 30px;
+	background: white;
+	text-align: center;
+}
+
+.pos .variant .price-tag {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	vertical-align: top;
+	color: white;
+	line-height: 13px;
+	background: #7f82ac;
+	padding: 2px 5px;
+	border-radius: 2px;
+	right: 0px;
+}
+
+.pos .variant img {
+	width: 90px;
+}
+
+.pos .variant .variant-name {
+	font-weight: normal;
+	position: absolute;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	bottom: 0;
+	top: auto;
+	line-height: 14px;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+	background: -moz-linear-gradient(-90deg, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+	background: -ms-linear-gradient(-90deg, rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
+	padding: 3px;
+	padding-top: 15px;
+}
+
+.pos .variant-screen .top-content #variant-title-name {
+	vertical-align: middle;
+	font-size: 20px;
+}

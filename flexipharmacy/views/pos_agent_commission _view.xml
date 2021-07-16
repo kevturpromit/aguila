@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem name="Doctor Commission" id="main_menu_pos_agent_commission" parent="point_of_sale.menu_point_root"
+                  sequence="91"/>
+
+        <record id="pos_agent_commission_view_form" model="ir.ui.view">
+            <field name="name">pos.agent.commission.form</field>
+            <field name="model">pos.agent.commission</field>
+            <field name="arch" type="xml">
+                <form string="Comisión Dr." create="false" delete="false" copy="false" edit="false">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="agent_id" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="commission_date" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="commission_number" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_agent_commission_view_tree" model="ir.ui.view">
+            <field name="name">pos.agent.commission.tree</field>
+            <field name="model">pos.agent.commission</field>
+            <field name="arch" type="xml">
+                <tree string="Doctor Commission" create="false" delete="false">
+                    <field name="agent_id"/>
+                    <field name="commission_number"/>
+                    <field name="name"/>
+                    <field name="commission_date"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <button type="object" string="Cancel" name="cancel_state" attrs="{'invisible':[('state', '!=', 'draft')]}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pos_agent_commission_action" model="ir.actions.act_window">
+            <field name="name">Doctor Commission</field>
+            <field name="res_model">pos.agent.commission</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Doctor Commission" id="menu_pos_agent_commission" parent="main_menu_pos_agent_commission"
+                  action="pos_agent_commission_action" sequence="1"/>
+
+<!-- POS Category inherited form view -->
+        <record id="pos_category_view_form_inherit" model="ir.ui.view">
+            <field name="name">pos.category.from</field>
+            <field name="model">pos.category</field>
+            <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="inside">
+                    <notebook>
+                        <page string="Comisiones Dr. POS">
+                            <group>
+                                <field name="pos_category_comm_ids" nolabel="1" mode="tree">
+                                    <tree editable="bottom">
+                                        <field name="agent_id"/>
+                                        <field name="calculation"/>
+                                        <field name="commission"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+<!-- POS Report Views -->
+        <record id="view_pos_commission_analysis_pivot" model="ir.ui.view">
+            <field name="name">report.pos.commission.pivot</field>
+            <field name="model">report.pos.commission</field>
+            <field name="arch" type="xml">
+                <pivot string="Análisis de Comisiones" disable_linking="True">
+                    <field name="commission_date" interval="month" type="row"/>
+                    <field name="agent_id" type="col"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_pos_commission_analysis_graph" model="ir.ui.view">
+            <field name="name">report.pos.commission.graph</field>
+            <field name="model">report.pos.commission</field>
+            <field name="arch" type="xml">
+                <graph string="Análisis de Comisiones">
+                    <field name="agent_id" type="row"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_pos_commission_analysis_all" model="ir.actions.act_window">
+            <field name="name">Commission Analysis</field>
+            <field name="res_model">report.pos.commission</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,pivot</field>
+        </record>
+
+        <menuitem name="Commission Analysis" id="pos_menu_commission_analysis" parent="flexipharmacy.main_menu_pos_agent_commission"
+                  action="flexipharmacy.action_pos_commission_analysis_all" sequence="4"/>
+
+
+        <record id="pos_commission_payment_view_form" model="ir.ui.view">
+            <field name="name">pos.commission.payment.from</field>
+            <field name="model">pos.commission.payment</field>
+            <field name="arch" type="xml">
+                <form string="Pago Comisiones">
+                    <group>
+                        <field name="agent_id"/>
+                    </group>
+                    <group>
+                        <notebook>
+                            <page string="Pago Comisiones">
+                                <field name="commission_pay_ids" nolable="1" options="{'no_create': True}">
+                                    <tree create="false">
+                                        <field name="agent_id"/>
+                                        <field name="name"/>
+                                        <field name="commission_date"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                    <footer>
+                        <button type="object" name="payment" class="oe_highlight" string="Payment"/>
+                        <button type="object" class="oe_highlight" string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="pos_commission_payment_action" model="ir.actions.act_window">
+            <field name="name">Commission Payment</field>
+            <field name="res_model">pos.commission.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Commission Payment" id="menu_pos_commission_payment" parent="flexipharmacy.main_menu_pos_agent_commission"
+                  action="pos_commission_payment_action" sequence="2"/>
+    </data>
+</odoo>

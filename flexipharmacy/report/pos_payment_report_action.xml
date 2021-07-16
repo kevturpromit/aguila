@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <report
+    id="action_pos_pending_payment_report"
+    string="Reporte de Pendientes de Pago"
+    model="pos.pending.payment.report"
+    report_type="qweb-pdf"
+    file="flexipharmacy.report_pos_pending_payment"
+    name="flexipharmacy.report_pos_pending_payment"
+    />
+
+</odoo>
