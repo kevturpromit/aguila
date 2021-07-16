@@ -4247,12 +4247,6 @@ odoo.define('flexipharmacy.screens', function (require) {
 					console.log('XM REMIPREION ALTERNO 222233333----------------------');
 					var self = this;
             		order.is_reprint = false;
-					/*self.receipt_data = this.get_receipt_render_env();
-					var receipt = QWeb.render('XmlReceiptReprint', self.receipt_data);
-					//console.log('XML', receipt);
-					self.pos.proxy.print_receipt(receipt);
-            		//this.pos.proxy.print_receipt(order.print_xml_receipt_html);
-            		return this.pos.get_order()._printed = true;*/
 
 					self.receipt_data = this.get_receipt_render_env();
 					var order = this.pos.get_order();
@@ -4366,15 +4360,18 @@ odoo.define('flexipharmacy.screens', function (require) {
 					if (order.is_to_invoice()) {
 					//if (this.pos.config.receipt_invoice_number) {
 						self.receipt_data = this.get_receipt_render_env();
-						var order = this.pos.get_order();
+						//var order = this.pos.get_order();
 						return rpc.query({
 							model: 'pos.order',
 							method: 'search_read',
-							domain: [['pos_reference', '=', order['name']]],
+							domain: [['pos_reference', '=', env['receipt']['ref']]],
 							fields: ['invoice_id'],
 						}).then(function (orders) {
+							
 							if (orders.length > 0) {
+								
 								if (orders[0]['invoice_id']) {
+									
 									var invoice_number = orders[0]['invoice_id'][1].split(" ")[0];
 									self.receipt_data['order']['invoice_number'] = invoice_number;
 									var invoice_id = orders[0]['invoice_id'][0];
@@ -4384,6 +4381,7 @@ odoo.define('flexipharmacy.screens', function (require) {
 										method: 'search_read',
 										domain: [['id', '=', invoice_id]]
 									}).then(function (invoice_number) {
+										
 										invoice_number = invoice_number;
 										dte_recovered = true;
 										var serie = invoice_number[0]['serie']
@@ -4391,8 +4389,7 @@ odoo.define('flexipharmacy.screens', function (require) {
 										var dte_date = invoice_number[0]['dte_date']
 										var uuid = invoice_number[0]['uuid']
 										var date_invoice = invoice_number[0]['date_invoice']
-										console.log('FLEXI MOD CALL ---- PPPPPPPPPPPPPPPPPPPPPPPPp')
-										console.log('Order', self.receipt_data)
+										
 										var invoice_date = new Date(dte_date);
 										invoice_date.setHours(invoice_date.getHours() + 6);
 										var invoice_months = invoice_date.getMonth()+1
@@ -4419,7 +4416,7 @@ odoo.define('flexipharmacy.screens', function (require) {
 							}
 						});
 					} else {
-						console.log('XM INGRESO ALTERNO----------------------');
+						
 						this._super();
 						var receipt = QWeb.render('XmlReceipt',env);
 						self.pos.proxy.print_receipt(receipt);
