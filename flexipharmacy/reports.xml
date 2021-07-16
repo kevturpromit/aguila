@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<report id="non_moving_stock_report"
+                model="non.moving.stock"
+                string="Productos sin Movimiento"
+                report_type="qweb-pdf"
+                name="flexipharmacy.non_moving_stock_template"
+                file="flexipharmacy.non_moving_stock_template"
+        />
+
+        <record id="pos_x_report" model="ir.actions.report">
+            <field name="name">X-Report</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.front_sales_report_pdf_template</field>
+            <field name="print_report_name">'X-Report - %s' % (object.name)</field>
+        </record>
+
+        <record id="x_report_thermal_front" model="ir.actions.report">
+            <field name="name">X Report(Thermal)</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.pos_x_thermal_report_template</field>
+            <field name="print_report_name">'POS X Report(Thermal)'</field>
+        </record>
+
+
+        <report
+                id="pos_z_report"
+                string="Reporte Z"
+                model="pos.session"
+                report_type="qweb-pdf"
+                file="flexipharmacy.pos_z_report_template"
+                name="flexipharmacy.pos_z_report_template"
+                menu="False"
+        />
+
+        <report
+                id="report_pos_sales"
+                string="Reporte Z"
+                model="pos.session"
+                report_type="qweb-pdf"
+                file="flexipharmacy.pos_sales_report_template"
+                name="flexipharmacy.pos_sales_report_template"
+                menu="False"/>
+
+        <report
+                id="report_pos_sales_pdf"
+                string="Reporte Z(pdf)"
+                model="pos.session"
+                report_type="qweb-pdf"
+                file="flexipharmacy.pos_sales_report_pdf_template"
+                name="flexipharmacy.pos_sales_report_pdf_template"
+                menu="False"/>
+
+        <report
+                id="report_sales_details_pdf"
+                string="Detalles de Ventas"
+                model="wizard.sales.details"
+                report_type="qweb-pdf"
+                file="flexipharmacy.sales_details_pdf_template"
+                name="flexipharmacy.sales_details_pdf_template"
+                menu="False"
+        />
+
+        <report
+                id="report_sales_details_thermal"
+                string="Detalles de Ventas(Thermal)"
+                model="wizard.sales.details"
+                report_type="qweb-pdf"
+                file="flexipharmacy.sales_details_template"
+                name="flexipharmacy.sales_details_template"
+                menu="False"
+        />
+
+        <report
+                id="report_pos_sales_thermal_front"
+                string="Reporte X"
+                model="pos.session"
+                report_type="qweb-pdf"
+                file="flexipharmacy.front_sales_thermal_report_template"
+                name="flexipharmacy.front_sales_thermal_report_template"
+                menu="False"
+        />
+
+        <report
+                id="report_pos_sales_pdf_front"
+                string="Reporte X(pdf)"
+                model="pos.session"
+                report_type="qweb-pdf"
+                file="flexipharmacy.front_sales_report_pdf_template"
+                name="flexipharmacy.front_sales_report_pdf_template"
+                menu="False"
+        />
+
+        <record id="report_pos_inventory_session_pdf_front" model="ir.actions.report">
+            <field name="name">Inventory Report(pdf)</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.front_inventory_session_pdf_report_template</field>
+            <field name="print_report_name">'Reporte de Inventario(pdf)'</field>
+        </record>
+
+        <record id="report_pos_inventory_session_thermal_front" model="ir.actions.report">
+            <field name="name">Inventory Report(Thermal)</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.front_inventory_session_thermal_report_template</field>
+            <field name="print_report_name">'Reporte de Inventario(Thermal)'</field>
+        </record>
+
+        <record id="report_pos_inventory_location_pdf_front" model="ir.actions.report">
+            <field name="name">Inventory Report(pdf)</field>
+            <field name="model">stock.location</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.front_inventory_location_pdf_report_template</field>
+            <field name="print_report_name">'Inventory Report(pdf)'</field>
+        </record>
+
+        <record id="report_pos_inventory_location_thermal_front" model="ir.actions.report">
+            <field name="name">Inventory Report(Thermal)</field>
+            <field name="model">stock.location</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.front_inventory_location_thermal_report_template</field>
+            <field name="print_report_name">'Inventory Report(Thermal)'</field>
+        </record>
+
+        <record id="z_report_thermal_front" model="ir.actions.report">
+            <field name="name">Z Report(Thermal)</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">flexipharmacy.pos_z_thermal_report_template</field>
+            <field name="print_report_name">'POS Z Report(Thermal)'</field>
+        </record>
+
+        <record id="paperformat_session_receipt_pdf" model="report.paperformat">
+            <field name="name">Session Receipt PDF</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">80</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">1</field>
+            <field name="margin_bottom">1</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+            <field name="report_ids" eval="[(6,0,[ref('flexipharmacy.report_pos_sales_pdf'),
+                                                  ref('flexipharmacy.report_pos_sales'),
+                                                  ref('flexipharmacy.pos_x_report'),
+                                                  ref('flexipharmacy.pos_z_report'),
+                                                  ref('flexipharmacy.report_sales_details_pdf'),
+                                                  ref('flexipharmacy.report_sales_details_thermal'),
+                                                  ref('flexipharmacy.report_pos_sales_pdf_front'),
+                                                  ref('flexipharmacy.report_pos_sales_thermal_front'),
+                                                  ref('flexipharmacy.report_pos_inventory_session_pdf_front'),
+                                                  ref('flexipharmacy.report_pos_inventory_location_pdf_front'),])]"/>
+        </record>
+
+        <report 
+            id="report_tax"
+            model="tax.report.wiz"
+            string="Reporte Impuestos"
+            report_type="qweb-pdf"
+            name="flexipharmacy.tax_report_template"
+            file="flexipharmacy.tax_report_template"
+            />
+
+        <report 
+            id="report_trial_balance"
+            model="trial.balance.wiz"
+            string="Balance General"
+            report_type="qweb-pdf"
+            name="flexipharmacy.trial_balance_template"
+            file="flexipharmacy.trial_balance_template"
+            />
+
+        <report
+            id="report_aged_payble"
+            model="aged.payable"
+            string="Vencidas por Pagar"
+            report_type="qweb-pdf"
+            name="flexipharmacy.aged_payble_template"
+            file="flexipharmacy.aged_payble_template"
+            />
+
+        <report
+            id="report_aged_receivable"
+            model="aged.receivable"
+            string="Vencidas por Cobrar"
+            report_type="qweb-pdf"
+            name="flexipharmacy.aged_receivable_template"
+            file="flexipharmacy.aged_receivable_template"
+            />
+            
+         <report 
+            id="report_partner_ledger"
+            model="account.report.partner.ledger"
+            string="Libro Mayor de Empresa"
+            report_type="qweb-pdf"
+            name="flexipharmacy.partner_ledger_template"
+            file="flexipharmacy.partner_ledger_template"
+            />
+
+
+        <report
+            id="action_report_financial"
+            model="account.financial.report"
+            string="Reporte Financiero"
+            menu="False"
+            report_type="qweb-pdf"
+            name="flexipharmacy.report_financial"
+            file="flexipharmacy.report_financial"
+            />
+            
+         <report 
+            id="report_general_ledger"
+            model="account.general.ledger.wiz"
+            string="Libro Mayor"
+            report_type="qweb-pdf"
+            name="flexipharmacy.general_ledger_template"
+            file="flexipharmacy.general_ledger_template"
+            />
+            
+          <report
+                id="product_expiry_report"
+                model="product.expiry.report"
+                string="Reporte de Productos Vencidos"
+                report_type="qweb-pdf"
+                name="flexipharmacy.product_exp_report_template"
+                file="flexipharmacy.product_exp_report_template"
+                menu="False"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="pos_agent_payment_report"
+                model="pos.agent.commission.payment"
+                string="Reporte de Comisiones"
+                report_type="qweb-pdf"
+                name="flexipharmacy.pos_commission_report_template"
+                file="flexipharmacy.pos_commission_report_template"
+                menu="False"
+        />
+
+    </data>
+</odoo>

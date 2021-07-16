@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="tax_report_template">
+    <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
+            <div class="page">
+                    <h3> Reporte de Impuestos</h3>
+                    <div class="col-xs-4">
+                        <t t-if="data['form']['date_from']"><strong>From</strong> <span t-esc="data['form']['date_from']"/></t>
+                        <t t-if="data['form']['date_to']"><strong>to </strong><span t-esc="data['form']['date_to']"/></t>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="text-center">
+                                <th/>
+                                <th class="text-right">Neto</th>
+                                <th class="text-right">Impuestos</th>
+                            </tr>
+                        </thead>
+                        <tr><td colspan="3"><strong>Venta</strong></td></tr>
+                        <tr t-foreach="taxes['sale']" t-as="line">
+                            <td><span t-esc="line.get('name')"/></td>
+                            <td class="text-right"><span t-att-style="style" t-esc="line.get('base')" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/></td>
+                            <td class="text-right"><span t-att-style="style" t-esc="line.get('amount')" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/></td>
+                        </tr>
+                        <tr><td colspan="3"><strong>Compra</strong></td>
+                        </tr>
+                        <tr t-foreach="taxes['purchase']" t-as="line">
+                            <td><span t-esc="line.get('name')"/></td>
+                            <td class="text-right"><span t-att-style="style" t-esc="line.get('base')" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/></td>
+                            <td class="text-right"><span t-att-style="style" t-esc="line.get('amount')" t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/></td>
+                        </tr>
+                    </table>
+                </div>
+        </t>
+    </t>
+</template>
+</odoo>

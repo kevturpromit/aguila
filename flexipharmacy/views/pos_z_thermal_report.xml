@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="pos_z_thermal_report_template">
+            <receipt align='center' width='40' value-thousands-separator=''>
+                <t t-foreach="docs" t-as="receipt">
+                    <div size='double-height' style="font-size:20px;" align="center">
+                        Reporte Z
+                    </div>
+                    <div align="center">
+                        ================
+                    </div>
+                    <line>
+                        <left>
+                            <pre>Fecha Reporte</pre>
+                        </left>
+                        <right t-esc="receipt.get_current_date()"/>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Hora Reporte</pre>
+                        </left>
+                        <right t-esc="receipt.get_current_time()"/>
+                    </line>
+                    <br/>
+                    <line>
+                        <left>
+                            <pre>Registro #</pre>
+                        </left>
+                        <right>1</right>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Lote #</pre>
+                        </left>
+                        <right t-esc="receipt.name"/>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Estado de Lote</pre>
+                        </left>
+                        <right t-esc="receipt.state"/>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Fecha Inicio</pre>
+                        </left>
+                        <right t-esc="receipt.get_session_date(receipt.start_at)"/>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Hora Inicio</pre>
+                        </left>
+                        <right t-esc="receipt.get_session_time(receipt.start_at)"/>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Cajero</pre>
+                        </left>
+                        <right t-esc="receipt.user_id.name"/>
+                    </line>
+                    <br/>
+                    <line>
+                        <left>
+                            <pre>Opening Total</pre>
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc='receipt.cash_register_balance_start'/>
+                            </value>
+                        </right>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Ventas</pre>
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc="'{0:.2f}'.format(receipt.get_total_sales())"/>
+                            </value>
+                        </right>
+                    </line>
+                    <line>
+                        <left>
+                            Ingreso Efectivo
+                        </left>
+                        <right>
+                            <span t-esc="'{0:.2f}'.format(receipt.get_money_in_total())"/>
+                        </right>
+                    </line>
+                    <line>
+                        <left>
+                            Salida Efectivo
+                        </left>
+                        <right>
+                            <span t-esc="'{0:.2f}'.format(abs(receipt.get_money_out_total()))"/>
+                        </right>
+                    </line>
+                    <t t-foreach="receipt.get_vat_tax()" t-as="tax">
+                        <line>
+                            <left>
+                                <t t-esc="tax.get('tax_name')"/>
+                                Detalles:
+                            </left>
+                        </line>
+                        <line indent='1'>
+                            <left>
+                                Monto Neto
+                            </left>
+                            <right>
+                                <span t-esc="tax.get('net_total')"/>
+                            </right>
+                        </line>
+                        <line indent='1'>
+                            <left>
+                                <span t-esc="tax.get('tax_per')"/>% Tax Amount
+                            </left>
+                            <right>
+                                <span t-esc="tax.get('tax_total')"/>
+                            </right>
+                        </line>
+                        <line indent='1'>
+                            <left>
+                                Monto Bruto
+                            </left>
+                            <right>
+                                <span t-esc="tax.get('gross_tax')"/>
+                            </right>
+                        </line>
+                    </t>
+                    <line>
+                        <left>
+                            <pre>Total Impuestos</pre>
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc='receipt.get_total_tax()'/>
+                            </value>
+                        </right>
+                    </line>
+                    <line>
+                        <left>
+                            <pre>Monto Descuento</pre>
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc='receipt.get_total_discount()'/>
+                            </value>
+                        </right>
+                    </line>
+                    <br/>
+                    <line>
+                        <left>
+                            Total de Cierre
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc="receipt.cash_register_balance_end_real"/>
+                            </value>
+                        </right>
+                    </line>
+                    <line>
+                        <left>
+                            Total
+                        </left>
+                        <right>
+                            <value>
+                                <t t-esc="receipt.get_total_closing()"/>
+                            </value>
+                        </right>
+                    </line>
+                    <br/>
+                    <t t-foreach="receipt.get_journal_amount()" t-as="l">
+                        <line>
+                            <left>
+                                <t t-esc="l.get('journal_id')"/>
+                            </left>
+                            <right>
+                                <t t-esc="l.get('ending_bal')"/>
+                            </right>
+                        </line>
+                    </t>
+                    <line>
+                        <left>
+                            Total Bruto
+                        </left>
+                        <right>
+                            <span t-esc="'{0:.2f}'.format(receipt.get_total_first_x())"/>
+                        </right>
+                    </line>
+                    <br/>
+                    <t t-if="receipt.get_product_category()">
+                        <line>
+                            <left>
+                                Ventas del Departamento:
+                            </left>
+                        </line>
+                        <br/>
+                        <t t-foreach="receipt.get_product_category()" t-as="l">
+                            <line>
+                                <left>
+                                    <t t-esc="receipt.get_product_name(l.get('pos_categ_id')) or 'Others'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'{0:.2f}'.format(l.get('price'))"/>
+                                </right>
+                            </line>
+                        </t>
+                        <line>
+                            <right>
+                                ===========
+                            </right>
+                        </line>
+                        <line>
+                            <right>
+                                <t t-esc="'{0:.2f}'.format(receipt.get_product_cate_total())"/>
+                            </right>
+                        </line>
+                    </t>
+                    ============================
+                    <br/>
+                    <br/>
+                    INGRESO EFECTIVO
+                    <t t-set="money_in_total" t-value="0"/>
+                    <t t-foreach="receipt.get_money_in_details()" t-as="m">
+                        <line>
+                            <left>
+                                <t t-esc="m.get('name')"/>
+                            </left>
+                            <right>
+                                <span t-esc="m.get('amount')"/>
+                                <t t-set="money_in_total" t-value="money_in_total + m.get('amount')"/>
+                            </right>
+                        </line>
+                    </t>
+                    <line>
+                        <left>
+                            Total
+                        </left>
+                        <right>
+                            <span t-esc="money_in_total"/>
+                        </right>
+                    </line>
+                    <br/>
+                    SALIDA EFECTIVO
+                    <t t-set="money_out_total" t-value="0"/>
+                    <t t-foreach="receipt.get_money_out_details()" t-as="m">
+                        <line>
+                            <left>
+                                <t t-esc="m.get('name')"/>
+                            </left>
+                            <right>
+                                <span t-esc="abs(m.get('amount'))"/>
+                                <t t-set="money_out_total" t-value="money_out_total + m.get('amount')"/>
+                            </right>
+                        </line>
+                    </t>
+                    <line>
+                        <left>
+                            Total
+                        </left>
+                        <right>
+                            <span t-esc="abs(money_out_total)"/>
+                        </right>
+                    </line>
+                    <br/>
+                </t>
+            </receipt>
+        </template>
+    </data>
+</odoo>

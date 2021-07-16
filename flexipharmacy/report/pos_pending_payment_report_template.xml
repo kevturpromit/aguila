@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_pos_pending_payment">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <br/>
+                <br/>
+                <h2 style="text-align:center">
+                    <strong>
+                        Reporte de Pendientes de Pago
+                    </strong>
+                </h2>
+                <br/>
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="with_detail == True">
+                        <div class="page">
+                            <div style="page-break-after: always">
+                                <br/>
+                                <h5>
+                                    <strong>Nombre Cliente:</strong>
+                                    <span t-esc="o"/>
+                                </h5>
+                                <br/>
+                                <t t-foreach="docs.get(o)" t-as="d">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <p>
+                                                <strong>Orden No</strong>
+                                                <br/>
+                                                <span t-esc="d.get('order_name')"/>
+                                            </p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>
+                                                <strong>Fecha Orden</strong>
+                                                <br/>
+                                                <span t-esc="d.get('date_order')"
+                                                      t-options="{'widget': 'datetime', 'format': 'dd-MM-y'}"/>
+                                            </p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p>
+                                                <strong>Monto Total</strong>
+                                                <br/>
+                                                <span t-esc="'%.2f'% d.get('amount_total')"/>
+                                                <span t-esc="symbol"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <table class="table table-bordered table-striped" width="100%">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Monto Pagado</th>
+                                            <th>Diario</th>
+                                        </tr>
+                                        <t t-foreach="get_statement(d)" t-as="s">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="s.get('date_order')"
+                                                          t-options="{'widget': 'date', 'format': 'dd-MM-y'}"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="'%.2f'% s.get('amount_paid')"/>
+                                                    <span t-esc="symbol"/>
+                                                </td>
+                                                <td>
+                                                    <span t-esc="s.get('journal_id')"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <br/>
+                                    <p>
+                                        <strong>Monto Pendiente:</strong>
+                                        <span t-esc="'%.2f'% d.get('amount_due')"/>
+                                        <span t-esc="symbol"/>
+                                    </p>
+                                    <hr/>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="with_detail != True">
+                        <h5>
+                            <strong>Nombre Cliente:</strong>
+                            <span t-esc="o"/>
+                        </h5>
+                        <br/>
+                        <table class="table table-bordered table-striped" width="100%">
+                            <tr>
+                                <th>Orden No</th>
+                                <th>Fecha</th>
+                                <th>Monto Pagado</th>
+                                <th>Monto Vencido</th>
+                            </tr>
+                            <t t-foreach="docs.get(o)" t-as="d">
+                                <tr>
+                                    <td>
+                                        <span t-esc="d.get('order_name')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="d.get('date_order')"
+                                              t-options="{'widget': 'date', 'format': 'dd-MM-y'}"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'%.2f'% d.get('amount_paid')"/>
+                                        <span t-esc="symbol"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'%.2f'% d.get('amount_due')"/>
+                                        <span t-esc="symbol"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                    </t>
+                </t>
+                <br/>
+                <h3 style="text-align:center">
+                    <strong>Resumen</strong>
+                </h3>
+                <br/>
+                <table class="table table-bordered table-striped" width="100%">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Monto Total Pagado</th>
+                        <th>Monto Total Pendiente</th>
+                    </tr>
+                    <t t-foreach="docs" t-as="m">
+                        <t t-set="qty" t-value="0.00"/>
+                        <t t-set="paid" t-value="0.00"/>
+                        <tr>
+                            <td>
+                                <span t-esc="m"/>
+                            </td>
+                            <t t-foreach="docs.get(m)" t-as="d">
+                                <t t-set="paid" t-value="paid + d.get('amount_paid')"/>
+                                <t t-set="qty" t-value="qty + d.get('amount_due')"/>
+                            </t>
+                            <td>
+                                <span t-esc="'%.2f'% paid"/>
+                                <span t-esc="symbol"/>
+                            </td>
+                            <td>
+                                <span t-esc="'%.2f'% qty"/>
+                                <span t-esc="symbol"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="sales_details_pdf_template">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-call="web.html_container">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+                            <div align="center"
+                                 style="border:1px solid black;margin:0 auto;padding:0 auto;font-size:25px">
+                                <strong>Resumen de Ventas</strong>
+                            </div>
+                            <t t-if="doc_id.only_summary == True">
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Fecha Reporte
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="doc_id.get_current_date()"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Hora Reporte
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="doc_id.get_current_time()"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Fecha Inicio
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="doc_id.start_date"
+                                                  t-field-options='{"format": "dd/M/YYYY"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Fecha Fin
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="doc_id.end_date" t-field-options='{"format": "dd/M/YYYY"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Ventas
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_sales" t-value="doc_id.get_total_sales()"/>
+                                            <t t-esc="doc_id.get_precision(total_sales)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Total
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_return" t-value="doc_id.get_total_returns()"/>
+                                            <t t-esc="doc_id.get_precision(total_return)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Impuestos
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_tax" t-value="doc_id.get_tax_amount()"/>
+                                            <t t-esc="doc_id.get_precision(total_tax)"/>
+<!--                                            <span t-esc="doc_id.get_tax_amount()"-->
+<!--                                                  t-options="{'widget': 'monetary', 'display_currency': user.company_id.currency_id}"/>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Monto Descuentos
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="discount" t-value="doc_id.get_total_discount()"/>
+                                            <t t-esc="doc_id.get_precision(discount)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Total Bruto
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="gross_total" t-value="doc_id.get_total_first()"/>
+                                            <t t-esc="doc_id.get_precision(gross_total)"/>
+                                        </td>
+                                    </tr>
+                                    <t t-if="doc_id.get_user()">
+                                        <tr>
+                                            <td class="text-left">
+                                                Ganancia Bruta
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="gross_profit" t-value="doc_id.get_gross_total()"/>
+                                                <t t-esc="doc_id.get_precision(gross_profit)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Ganancia Neta Bruta
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="net_gross_profit" t-value="doc_id.get_net_gross_total()"/>
+                                                <t t-esc="doc_id.get_precision(net_gross_profit)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr t-foreach="doc_id.get_payments()" t-as="l">
+                                        <t t-if="l.get('name')">
+                                            <td class="text-left">
+                                                <span t-esc="l.get('name')"/>
+                                            </td>
+                                        </t>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="sum" t-value="l.get('sum')"/>
+                                            <t t-esc="doc_id.get_precision(sum)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <t t-if="doc_id.get_product_category()">
+                                    <div class="text-left" style="margin-top:10px !important;">
+                                        Ventas de Departamento:
+                                    </div>
+                                    <table style="width:100%;margin-top:15px;">
+                                        <tr t-foreach="doc_id.get_product_category()" t-as="l">
+                                            <td class="text-left">
+                                                <span t-esc="doc_id.get_product_name(l.get('pos_categ_id'))"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="dept_sales" t-value="l.get('price')"/>
+                                                <t t-esc="doc_id.get_precision(dept_sales)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="width:50%;">
+                                            </td>
+                                            <td style="width:50%; !important" class="text-right">
+                                                ===========
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:50%;">
+                                            </td>
+                                            <td style="width:50%; !important" class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="product_sales" t-value="doc_id.get_product_cate_total()"/>
+                                                <t t-esc="doc_id.get_precision(product_sales)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+
+                            <t t-if="doc_id.only_summary != True">
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Fecha/Hora Reporte
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="doc_id.get_current_date()"/>
+                                            <span t-esc="doc_id.get_current_time()"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Fecha Inicio
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="doc_id.start_date"
+                                                  t-field-options='{"format": "dd/M/YYYY"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            End Date
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="doc_id.end_date" t-field-options='{"format": "dd/M/YYYY"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <t t-foreach="doc_id.get_user_wise_data()" t-as="users_dict">
+                                    <br/>
+                                    <strong>Vendedor :</strong>
+                                    <span t-esc="users_dict"/>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td class="text-left">
+                                                Ventas
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="total_sales" t-value="users_dict_value['total_sales']"/>
+                                                <t t-esc="doc_id.get_precision(total_sales)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Total
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="total" t-value="users_dict_value['total']"/>
+                                                <t t-esc="doc_id.get_precision(total)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Impuestos
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="taxes" t-value="users_dict_value['taxes']"/>
+                                                <t t-esc="doc_id.get_precision(taxes)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Monto Descuento
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="total_discount" t-value="users_dict_value['total_discount']"/>
+                                                <t t-esc="doc_id.get_precision(total_discount)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Total Bruto
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="gross_total" t-value="users_dict_value['gross_total']"/>
+                                                <t t-esc="doc_id.get_precision(gross_total)"/>
+                                            </td>
+                                        </tr>
+                                        <t t-if="doc_id.get_user()">
+                                            <tr>
+                                                <td class="text-left">
+                                                    Ganancia Bruta
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="user.company_id.currency_id.symbol"/>
+                                                    <t t-set="gross_profit" t-value="users_dict_value['gross_profit']"/>
+                                                    <t t-esc="doc_id.get_precision(gross_profit)"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">
+                                                    Ganancia Neta Bruta
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="user.company_id.currency_id.symbol"/>
+                                                    <t t-set="net_gross" t-value="users_dict_value['net_gross']"/>
+                                                    <t t-esc="doc_id.get_precision(net_gross)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <table style="width:100%;margin-top:15px;">
+                                        <tr t-foreach="users_dict_value['payment']" t-as="l">
+                                            <t t-if="l.get('name')">
+                                                <td class="text-left">
+                                                    <span t-esc="l.get('name')"/>
+                                                </td>
+                                            </t>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="sum" t-value="l.get('sum')"/>
+                                                <t t-esc="doc_id.get_precision(sum)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <t t-if="users_dict_value['product_category']">
+                                        <div class="text-left" style="margin-top:10px !important;">
+                                            Ventas Departamento:
+                                        </div>
+                                        <table style="width:100%;margin-top:15px;">
+                                            <tr t-foreach="users_dict_value['product_category']" t-as="l">
+                                                <td class="text-left">
+                                                    <span t-esc="doc_id.get_product_name(l.get('pos_categ_id'))"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="user.company_id.currency_id.symbol"/>
+                                                    <t t-set="price" t-value="l.get('price')"/>
+                                                    <t t-esc="doc_id.get_precision(price)"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td style="width:50%;">
+                                                </td>
+                                                <td style="width:50%; !important" class="text-right">
+                                                    ===========
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td style="width:50%;">
+                                                </td>
+                                                <td style="width:50%; !important" class="text-right">
+                                                    <span t-field="user.company_id.currency_id.symbol"/>
+                                                    <t t-set="prod_categ_total" t-value="users_dict_value['prod_categ_total']"/>
+                                                    <t t-esc="doc_id.get_precision(prod_categ_total)"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </t>
+                                </t>
+                                <strong>Resumen</strong>
+                                <br/>
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td class="text-left">
+                                            Ventas
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_sales" t-value="doc_id.get_total_sales()"/>
+                                            <t t-esc="doc_id.get_precision(total_sales)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Total
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_return" t-value="doc_id.get_total_returns()"/>
+                                            <t t-esc="doc_id.get_precision(total_return)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Impuestos
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="total_tax" t-value="doc_id.get_tax_amount()"/>
+                                            <t t-esc="doc_id.get_precision(total_tax)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Monto Descuento
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="discount" t-value="doc_id.get_total_discount()"/>
+                                            <t t-esc="doc_id.get_precision(discount)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-left">
+                                            Gross Total
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="gross_total" t-value="doc_id.get_total_first()"/>
+                                            <t t-esc="doc_id.get_precision(gross_total)"/>
+                                        </td>
+                                    </tr>
+                                    <t t-if="doc_id.get_user()">
+                                        <tr>
+                                            <td class="text-left">
+                                                Ganancia Bruta
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="gross_profit" t-value="doc_id.get_gross_total()"/>
+                                                <t t-esc="doc_id.get_precision(gross_profit)"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">
+                                                Ganancia Neta Bruta
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="net_gross_profit" t-value="doc_id.get_net_gross_total()"/>
+                                                <t t-esc="doc_id.get_precision(net_gross_profit)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <table style="width:100%;margin-top:15px;">
+                                    <tr t-foreach="doc_id.get_payments()" t-as="l">
+                                        <t t-if="l.get('name')">
+                                            <td class="text-left">
+                                                <span t-esc="l.get('name')"/>
+                                            </td>
+                                        </t>
+                                        <td class="text-right">
+                                            <span t-field="user.company_id.currency_id.symbol"/>
+                                            <t t-set="sum" t-value="l.get('sum')"/>
+                                            <t t-esc="doc_id.get_precision(sum)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <t t-if="doc_id.get_product_category()">
+                                    <div class="text-left" style="margin-top:10px !important;">
+                                        Ventas Departamento:
+                                    </div>
+                                    <table style="width:100%;margin-top:15px;">
+                                        <tr t-foreach="doc_id.get_product_category()" t-as="l">
+                                            <td class="text-left">
+                                                <span t-esc="doc_id.get_product_name(l.get('pos_categ_id'))"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="price" t-value="l.get('price')"/>
+                                                <t t-esc="doc_id.get_precision(price)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="width:50%;">
+                                            </td>
+                                            <td style="width:50%; !important" class="text-right">
+                                                ===========
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:50%;">
+                                            </td>
+                                            <td style="width:50%; !important" class="text-right">
+                                                <span t-field="user.company_id.currency_id.symbol"/>
+                                                <t t-set="product_cate_total" t-value="doc_id.get_product_cate_total()"/>
+                                                <t t-esc="doc_id.get_precision(product_cate_total)"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

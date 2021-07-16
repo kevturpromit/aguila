@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="aspl_view_customer_form" model="ir.ui.view">
+            <field name="name">Customer Form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+<!--                 Commission Part Started -->
+                <!-- <xpath expr="//sheet/notebook//page[@name='sales_purchases']//group[@name='container_row_2']//group[@name='purchase']"
+                       position="after">
+                    <group string="PoS Doctor Commission">
+                        <field name="is_pos_agent"/>
+                    </group>
+                </xpath> -->
+                <xpath expr="//sheet//notebook" position="inside">
+                    <page string="PoS Doctor Commission" attrs="{'invisible':[('is_doctor', '=', False)]}">
+                        <group>
+                            <group string="Moneda">
+                                <field name="currency_id"/>
+                            </group>
+                            <group string="Detalles del Programador">
+                                <field name="pos_commission_payment_type"/>
+                                <field name="pos_next_payment_date"
+                                       attrs="{'invisible':[('pos_commission_payment_type','=','manually')]}"/>
+                            </group>
+                        </group>
+                        <field name="pos_agent_commission_ids" nolabel="1" mode="tree">
+                            <tree editable="bottom">
+                                <field name="agent_id" invisible="1"/>
+                                <field name="calculation"/>
+                                <field name="commission"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//sheet//div[@name='button_box']" position="inside">
+                    <button name="pos_commission_payment_count" type="object" class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible':[('is_doctor', '=', False)]}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="pos_commission_count" widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </span>
+                            <span class="o_stat_text">PoS Commission</span>
+                        </div>
+                    </button>
+                </xpath>
+<!--                 Commission Part Ended -->
+                <xpath expr="//group[@name='sale']/field[@name='customer']" position="after">
+                    <field name="is_doctor"/>
+                </xpath>
+                <field name="lang" position="after">
+                    <field name="remaining_credit_amount"/>
+                    <field name="remaining_amount"/>
+                    <field name="is_doctor"/>
+                </field>
+                <field name="vat" position="after">
+                    <field name="birth_date"/>
+                    <field name="anniversary_date"/>
+                </field>
+                <field name="category_id" position="after">
+                    <field name="debit_limit"/>
+                    <field name="remaining_debit_amount"/>
+                </field>
+                <notebook>
+                    <page string="Tarjetas">
+                        <field name="card_ids"/>
+                    </page>
+                    <page string="Tarjetas Usadas">
+                        <field name="used_ids"/>
+                    </page>
+                    <page string="Tarjetas Recargadas">
+                        <field name="recharged_ids"/>
+                    </page>
+                    <page string="Historial de Cambio - Tarjetas de Regalo">
+                        <field name="exchange_history_ids"/>
+                    </page>
+                    <page string="Monedero">
+                        <group>
+                            <field name="remaining_wallet_amount"/>
+                        </group>
+                        <group>
+                            <field name="wallet_lines" nolabel='1'>
+                                <tree create="true">
+                                    <field name="order_id"/>
+                                    <field name="cashier_id"/>
+                                    <field name="type"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</openerp>

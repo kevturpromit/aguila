@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <record id="confirm_form_wiz" model="ir.ui.view">
+           <field name="name">valid.days.form</field>
+           <field name="model">wizard.set.valid.days</field>
+           <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="product_category" widget="many2many_tags"/>
+                        <field name="products" widget="many2many_tags"/>
+                        <field name="valid_days"/>
+                    </group>
+                   <footer>
+                       <button name="set_days" class="oe_right" string="Establecer Días" type="object"/>
+                       <button string="Cancelar" class="oe_right" special="cancel"/>
+                   </footer>
+               </form>
+           </field>
+       </record>
+
+        <record model="ir.actions.act_window" id="action_view_valid_days">
+            <field name="name">Product Set Valid Days</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.set.valid.days</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="validdays" name="Set Valid Days" parent="point_of_sale.pos_config_menu_catalog"
+                  action="action_view_valid_days"/>
+   </data>
+</odoo>

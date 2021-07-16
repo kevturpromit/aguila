@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="front_sales_report_pdf_document">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <div align="center" style="border:1px solid black;margin:0 auto;padding:0 auto;font-size:25px">
+                        <strong>Reporte X</strong>
+                    </div>
+                    <div align="center" style="margin:0 auto;padding:0 auto;font-size:20px;margin-top:8px;">
+                        <div style="font-size:13px;">
+                            <t t-if="o.get_company_data_x().name">
+                                <t t-esc="o.get_company_data_x().name"/>
+                                <br/>
+                            </t>
+                            <t t-if="o.get_company_data_x().street">
+                                <t t-esc="o.get_company_data_x().street"/>
+                                <br/>
+                            </t>
+                            <t t-if="o.get_company_data_x().street2">
+                                <t t-esc="o.get_company_data_x().street2"/>
+                            </t>
+                            <t t-if="o.get_company_data_x().city">
+                                <t t-esc="o.get_company_data_x().city"/>
+                            </t>
+                            <t t-if="o.get_company_data_x().state_id.name">
+                                <t t-esc="o.get_company_data_x().state_id.name"/>
+                            </t>
+                            <t t-if="o.get_company_data_x().country_id.name">
+                                <t t-esc="o.get_company_data_x().country_id.name"/>
+                            </t>
+                            <br/>
+                            <t t-if="o.get_company_data_x().phone">
+                                Tel:
+                                <t t-esc="o.get_company_data_x().phone"/>
+                                <br/>
+                            </t>
+                            <t t-if="o.get_company_data_x().email">
+                                Email:
+                                <t t-esc="o.get_company_data_x().email"/>
+                                <br/>
+                            </t>
+                            <t t-if="o.get_company_data_x().website">
+                                Website:
+                                <t t-esc="o.get_company_data_x().website"/>
+                                <br/>
+                            </t>
+                        </div>
+                    </div>
+                    <table style="width:100%;margin-top:15px;">
+                        <tr>
+                            <td class="text-left">
+                                Fecha
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.get_current_date_x()"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Hora
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.get_current_time_x()"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%;margin-top:15px;">
+                        <tr>
+                            <td class="text-left">
+                                Registro #
+                            </td>
+                            <td class="text-right">
+                                1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Lote #
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Estado Lote
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.state"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Fecha Inicio
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.get_session_date_x(o.start_at)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Fecha Inicio
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="o.get_session_time_x(o.start_at)"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%;margin-top:15px;">
+                        <tr>
+                            <td class="text-left">
+                                Total Apertura
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="opening_total" t-value="o.cash_register_balance_start"/>
+                                <t t-esc="o.get_precision(opening_total)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Ventas
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="sales_total" t-value="o.get_total_sales_x()"/>
+                                <t t-esc="o.get_precision(sales_total)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Ingresar Efectivo
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="money_in" t-value="o.get_money_in_total()"/>
+                                <t t-esc="o.get_precision(money_in)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Sacar Efectivo
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="money_out" t-value="abs(o.get_money_out_total())"/>
+                                <t t-esc="o.get_precision(money_out)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Vueltos
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="returns" t-value="o.get_total_returns_x()"/>
+                                <t t-esc="o.get_precision(returns)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Impuestos
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="tax" t-value="o.get_total_tax_x()"/>
+                                <t t-esc="o.get_precision(tax)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Cantidad Descuento
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="discount" t-value="o.get_total_discount_x()"/>
+                                <t t-esc="o.get_precision(discount)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">
+                                Total Neto
+                            </td>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="gross_total" t-value="o.get_total_first_x()"/>
+                                <t t-esc="o.get_precision(gross_total)"/>
+                            </td>
+                        </tr>
+                        <t t-if="o.get_user()">
+                            <tr>
+                                <td class="text-left">
+                                    Ganancia Neta
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-set="gross_profit" t-value="o.get_gross_total_x()"/>
+                                    <t t-esc="o.get_precision(gross_profit)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Ganancia Neta
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-set="net_gross_profit" t-value="o.get_net_gross_total_x()"/>
+                                    <t t-esc="o.get_precision(net_gross_profit)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                    <t t-if="o.get_product_category()">
+                        <div align="center" style="margin-top:10px !important;">
+                            ============================
+                            <br/>
+                            Ventas Departamentales
+                        </div>
+                        <table style="width:100%;margin-top:15px;">
+                            <tr t-foreach="o.get_product_category_x()" t-as="l">
+                                <td class="text-left">
+                                    <span t-esc="o.get_product_name_x(l.get('pos_categ_id')) or 'Others'"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-set="dept_sales" t-value="l.get('price')"/>
+                                    <t t-esc="o.get_precision(dept_sales)"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:50%;">
+                                </td>
+                                <td style="width:50%; !important" class="text-center">
+                                    =======================
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%">
+                            <tr>
+                                <td style="width:50%;" class="text-left">
+                                    Total
+                                </td>
+                                <td style="width:50%; !important" class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-set="total" t-value="o.get_product_cate_total_x()"/>
+                                    <t t-esc="o.get_precision(total)"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                    <br/>
+                    <t t-set="journal_total" t-value="0"/>
+                    <table style="width:100%;margin-top:15px;">
+                        <tr t-foreach="o.get_journal_amount_x()" t-as="l">
+                            <t t-if="l.get('journal_id')">
+                                <td class="text-left">
+                                    <span t-esc="l.get('journal_id')"/>
+                                </td>
+                            </t>
+                            <td class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+                                <t t-set="ending_bal" t-value="l.get('ending_bal')"/>
+                                <t t-esc="o.get_precision(ending_bal)"/>
+                                <t t-set="journal_total" t-value="journal_total + l.get('ending_bal')"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--<table style="width:100%;margin-top:15px;">
+                        <t t-set="total" t-value="0"/>
+                        <tr t-foreach="o.get_payments()" t-as="l">
+                            <td class="text-left">
+                                <span t-esc="l.get('name')"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="l.get('sum')"
+                                      t-esc-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                            <t t-set="total" t-value="total + l.get('sum')"/>
+                        </tr>
+                    </table>-->
+                    <table style="width:100%">
+                        <tr class="text-center">
+                            =======================
+                        </tr>
+                        <tr>
+                            <td style="width:50%;" class="text-left">
+                                Total
+                            </td>
+                            <td style="width:50%; !important" class="text-right">
+                                <span t-field="o.currency_id.symbol"/>
+<!--                                <t t-set="ending_bal" t-value="l.get('ending_bal')"/>-->
+                                <t t-esc="o.get_precision(journal_total)"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <t t-if="o.get_money_in_details()">
+                        <div align="center" style="margin-top:10px !important;">
+                            ============================
+                            <br/>
+                            INGRESO EFECTIVO
+                        </div>
+                        <table style="width:100%;margin-top:15px;">
+                            <t t-set="money_in_total" t-value="0"/>
+                            <tr t-foreach="o.get_money_in_details()" t-as="m">
+                                <t t-if="m.get('name')">
+                                    <td class="text-left">
+                                        <span t-esc="m.get('name')"/>
+                                    </td>
+                                </t>
+                                <t t-if="m.get('amount')">
+                                    <td class="text-right">
+                                        <span t-field="o.currency_id.symbol"/>
+                                        <t t-set="money_in" t-value="abs(m.get('amount'))"/>
+                                        <t t-esc="o.get_precision(money_in)"/>
+                                        <t t-set="money_in_total" t-value="money_in_total + m.get('amount')"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-right">========</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Total
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-esc="o.get_precision(money_in_total)"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div align="center" style="margin-top:10px !important;">
+                            ============================
+                            <br/>
+                            SALIDA EFECTIVO
+                        </div>
+                        <table style="width:100%;margin-top:15px;">
+                            <t t-set="money_out_total" t-value="0"/>
+                            <tr t-foreach="o.get_money_out_details()" t-as="m">
+                                <t t-if="m.get('name')">
+                                    <td class="text-left">
+                                        <span t-esc="m.get('name')"/>
+                                    </td>
+                                </t>
+                                <t t-if="m.get('amount')">
+                                    <td class="text-right">
+                                        <span t-field="o.currency_id.symbol"/>
+                                        <t t-set="money_out" t-value="abs(m.get('amount'))"/>
+                                        <t t-esc="o.get_precision(money_out)"/>
+                                        <t t-set="money_out_total" t-value="money_out_total + m.get('amount')"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-right">========</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Total
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-esc="o.get_precision(money_out_total)"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <template id="front_sales_report_pdf_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="flexipharmacy.front_sales_report_pdf_document"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

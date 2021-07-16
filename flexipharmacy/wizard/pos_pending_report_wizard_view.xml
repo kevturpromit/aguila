@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="pos_pending_report_wizard_view" model="ir.ui.view">
+        <field name="name">pos.pending.report.wizard.view</field>
+        <field name="model">pos.pending.payment.report</field>
+        <field name="arch" type="xml">
+            <form string="Pending Payment Report">
+                <group>
+                    <field name="with_detail"/>
+                </group>
+                    <footer>
+                        <button name="generate_report" type="object" string="Imprimir" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+    </record>
+
+    <record id="pos_pending_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Pending Payment Report</field>
+        <field name="res_model">pos.pending.payment.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="pending_report_wizard_menu" name="Pending Payment Report" parent="point_of_sale.menu_point_rep" action="pos_pending_report_wizard_action"/>
+</odoo>

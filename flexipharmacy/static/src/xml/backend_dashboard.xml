@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="tag_dashboard">
+    <div t-name="SalesDashboard" style="width:100%">
+        <div class="container-fluid" style="margin-top:5px;">
+            <div class="row">
+                <div class="col-md-3" style="padding-right:0">
+                    <div class="box box-widget widget-user-2" style="margin-top:0">
+                        <div class="widget-user-header bg-yellow" style="height: 118px">
+                            <div class="widget-user-image" id="image_viewer"/>
+                            <h5 class="widget-user-desc">Bienvenid@s</h5>
+                            <h3 class="welcome-text widget-user-username"/>
+                        </div>
+                        <div class="box-footer no-padding" style="padding-bottom:7px">
+                            <div class="form-group">
+                                <span id="select-year">
+                                    <select class="pos-company form-control pull-left" placeholder="select company"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"
+                     style="padding-left:5px; padding-right:2px;box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);margin-bottom: 20px;">
+                    <div class="icon bg-aqua">
+                        <center class="pos_session"></center>
+                    </div>
+                    <center style="background:#FFFF">
+                        <div class="content">
+                            <h3 class='active-session'/>
+                            <p style="padding-bottom:10px">
+                                <strong>Sesiones Activas</strong>
+                            </p>
+                        </div>
+                    </center>
+                </div>
+                <div class="col-md-7">
+                    <div class="row" style="margin-bottom:5px">
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon bg-yellow">
+                                    <i class="fa fa-shopping-bag"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class='today-total-orders'/>
+                                    <p>Ordenes del día</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon product">
+                                    <i class="fa fa-line-chart"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class='today-total-sales'/>
+                                    <p>Ventas del día</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon bg-aqua">
+                                    <i class="fa fa-cart-arrow-down"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class="today-product-sold"/>
+                                    <p>Productos Vendidos del día</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon bg-martina">
+                                    <i class="fa fa-shopping-bag"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class='total-orders'/>
+                                    <p>Ordenes Totales</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon bg-rose">
+                                    <i class="fa fa-line-chart"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class="total-sales"/>
+                                    <p>Ventas Totales</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding-left:5px; padding-right:2px">
+                            <div class="info-box">
+                                <div class="icon bg-keppel">
+                                    <i class="fa fa-cart-arrow-down"/>
+                                </div>
+                                <div class="content">
+                                    <h3 class="product-sold"/>
+                                    <p>Total de Productos Vendidos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8" style="padding-right:0">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Reporte de Ventas</h3>
+                            <span class="dmy-btn-group btn-group pull-right">
+                                <button type="button" class="dmy btn btn-secondary active" data-text="today"
+                                        value="today">Hoy
+                                </button>
+                                <button type="button" class="dmy btn btn-secondary" data-text="month" value="month">Este Mes
+                                </button>
+                                <button type="button" class="dmy btn btn-secondary" data-text="year" value="year">Este Año
+                                </button>
+                            </span>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart">
+                                <div id="chart_day_month_year" class="day" style="height:338px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 pos-info">
+                    <div class="box transparent" style="background:transparent; border:none;margin-">
+                        <div class="box-body">
+                            <div class="info-box bg-aqua">
+                                <span class="info-box-icon">
+                                    <i class="fa fa-users"/>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">El mejor personal de Hoy</span>
+                                    <span class="info-box-number" id="top_staff_today_amount">0.0</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"/>
+                                    </div>
+                                    <span class="progress-description" id="top_staff_today_name">
+                                        Datos no Encontrados
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-box bg-green">
+                                <span class="info-box-icon">
+                                    <i class="fa fa-clock-o"/>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Horas pico de Hoy</span>
+                                    <span class="info-box-number" id="top_hour_amount"/>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"/>
+                                    </div>
+                                    <span class="progress-description" id="top_hours_hour">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-box bg-red">
+                                <span class="info-box-icon">
+                                    <i class="average-custmer-spenting-icon"/>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Gasto Promedio del Cliente</span>
+                                    <span class="info-box-number" id="average-custmer-spenting"/>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"/>
+                                    </div>
+                                    <span class="progress-description">
+                                        Últimos 30 días
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-box bg-yellow" style="margin-bottom:0">
+                                <span class="info-box-icon">
+                                    <i class="fa fa-user"/>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Visita Promedio del Cliente</span>
+                                    <span class="info-box-number" id="average-custmer-visit"/>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"/>
+                                    </div>
+                                    <span class="progress-description">
+                                        Últimos 30 días
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--PAYMENT BY JOURNAL-->
+        <div class="row" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Tipos de Pago</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="box-tools">
+                                    <span class="form-group">
+                                        <span class="pull-right">
+                                            <select class="journal-option form-control" placeholder="select option">
+                                            </select>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="chart">
+                                    <div id="journal_pie_chart" style="width: 100%; height:400px;"/>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="chart">
+                                    <div id="journal_line_chart" style="width: 100%; height:400px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4" style="padding-right:2px">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Los mejores 10 Clientes</h3>
+                            <div class="box-tools pull-right">
+                                <select class="top_customer_w_m_y form-control pull-left" placeholder="select Month">
+                                    <option data-value="week" selected="selected">Esta semana</option>
+                                    <option data-value="month">Este Mes</option>
+                                    <option data-value="year">Este Año</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="box-body" style="height:250px">
+                            <div class="table-responsive">
+                                <table class="top-client table no-margin">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ventas por Vendedor</h3>
+                            <div class="box-tools pull-right">
+                                <select class="top_salesman_w_m_y form-control pull-left" placeholder="select Month">
+                                    <option data-value="week" selected="selected">Esta Semana</option>
+                                    <option data-value="month">Este mes</option>
+                                    <option data-value="year">Este año</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="box-body" style="height:250px">
+                            <div class="table-responsive">
+                                <table class="top_salesperson table no-margin">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="padding-left:0">
+                    <div class="box box-primary">
+                        <div class="box-header with-border" style="padding-right:10px">
+                            <h3 class="box-title">Horas de Trabajo del Empleado</h3>
+                            <div class="box-tools pull-right">
+                            </div>
+                        </div>
+                        <div class="box-body" style="height:250px">
+                            <div class="table-responsive">
+                                <table class="employee_time table no-margin">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">  Artículos Principales por Ventas</h3>
+                            <div class="box-tools pull-right">
+                                <div class="form-group">
+                                    <span class="pull-right">
+                                        <select class="top_items_sales_w_m_y form-control pull-left"
+                                                placeholder="select Month">
+                                            <option data-value="week" selected="selected">Esta Semana</option>
+                                            <option data-value="month">Este Mes</option>
+                                            <option data-value="year">Este Año</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body" style="height:288px">
+                            <div class="table-responsive">
+                                <table id="top_items_sold" class="table no-margin"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8" style="padding-left:0">
+                    <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Top 5 Categories by Sales</h3>
+                            <div class="box-tools pull-right">
+                                <div class="form-group">
+                                    <span class="pull-right">
+                                        <select class="product-option form-control pull-left"
+                                                placeholder="select option">
+                                            <option select="selected">Precio</option>
+                                            <option>Cantidad</option>
+                                        </select>
+                                    </span>
+                                    <span class="pull-right">
+                                        <select class="product-order form-control pull-left" placeholder="select order"
+                                                style="margin-left: - 5px;">
+                                            <option select="selected">Top</option>
+                                            <option>Bottom</option>
+                                        </select>
+                                    </span>
+                                    <span class="pull-right">
+                                        <select class="top_product_catg_w_m_y form-control" placeholder="select Month">
+                                            <option data-value="week" selected="selected">Esta Semana</option>
+                                            <option data-value="month">Este Mes</option>
+                                            <option data-value="year">Este Año</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="top_product_category" style="width: 100%; height: 255px;" class="graph-div"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Detalles de Ventas Semanas</h3>
+                            <div class="box-tools pull-right">
+                                <div class="form-group">
+                                    <span class="pull-right">
+                                        <select class="week-option form-control pull-left" placeholder="select Week"/>
+                                    </span>
+                                    <span class="pull-right">
+                                        <select class="month-option form-control pull-left" placeholder="select Month">
+                                            <option value="1">Enero</option>
+                                            <option value="2">Febrera</option>
+                                            <option value="3">Marzo</option>
+                                            <option value="4">Abril</option>
+                                            <option value="5">Mayo</option>
+                                            <option value="6">Junio</option>
+                                            <option value="7">Julio</option>
+                                            <option value="8">Agosto</option>
+                                            <option value="9">Septiembre</option>
+                                            <option value="10">Octubre</option>
+                                            <option value="11">Noviembre</option>
+                                            <option value="12">Diciembre</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="chartweekly" style="width: 100%; height: 400px;" class="graph-div"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--DAILY COMPARE GROSS SALES-->
+        <div class="row" style="margin-left:0; margin-right: 0;">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Ventas Brutas Diarias</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="box-tools">
+                                    <span class="form-group">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <div id="daily_gross_sale" style="width: 100%; height:400px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--WEEKLY COMPARE GROSS SALES-->
+        <div class="row" style="margin-left:0; margin-right: 0;">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="box-title">Ventas Brutas Semanales</h3>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="box-tools">
+                                    <span class="form-grou pull-right" id="weekly_gross_date">
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart">
+                                    <div id="weekly_gross_sales_compare_barchart" style="width: 100%; height:400px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</templates>
