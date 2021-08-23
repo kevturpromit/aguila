@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="fel_infile_view_move_form">
+            <field name="name">fel_infile.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="l10n_gt_extra.l10n_gt_view_move_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="narration" position="before">
+                        <group>
+                            <group>
+                                <field name="firma_fel"/>
+                                <field name="serie_fel"/>
+                                <field name="numero_fel"/>
+                            </group>
+                            <group>
+                                <field name="pdf_fel" widget="url"/>
+                                <field name="factura_original_id"/>
+                            </group>
+                        </group>
+                    </field>
+                    
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="journal_form_fel_infile">
+            <field name="name">account.journal.form.fel_infile</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="currency_id" position="after">
+                        <field name="generar_fel"/>
+                        <field name="tipo_documento_fel"/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_company_form_fel_infile" model="ir.ui.view">
+            <field name="name">res.company.form.fel_infile</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <notebook position="inside">
+                        <page string="FEL Infile">
+                            <group string="Infile">
+                                <group>
+                                    <field name="usuario_fel"/>
+                                    <field name="clave_fel"/>
+                                    <field name="token_firma_fel"/>
+                                    <field name="frases_fel"/>
+                                    <field name="adenda_fel"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>
